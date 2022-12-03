@@ -4,19 +4,7 @@
 #include <glad.h>
 #include <glfw3.h>
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
-
-void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
-	glfwMakeContextCurrent(window);
-	glViewport(0, 0, width, height);
-}
-
-void ProcessInput(GLFWwindow* window) {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-		glfwSetWindowShouldClose(window, true);
-	}
-}
+#include "../inc/Window.h"
 
 int main() {
 	// Init stuff
@@ -25,28 +13,15 @@ int main() {
 		glfwTerminate();
 		return -1;
 	}
+	//if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+	//	std::cout << "Failed to initialize GLAD" << std::endl;
+	//	return -1;
+	//}
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "NoobEngine", NULL, NULL);
+	GLFWwindow* window = NoobEngine::Window::CreateWindow(NoobEngine::WindowProps());
 	if (!window) {
-		std::cout << "Failed to create GLFW window!\n";
-		glfwTerminate();
 		return -1;
 	}
-	glfwMakeContextCurrent(window);
-
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-		std::cout << "Failed to initialize GLAD" << std::endl;
-		return -1;
-	}
-
-	glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-	
-	// Setup callbacks
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	// Vertices data
 	float vertices[] = {
@@ -116,7 +91,7 @@ int main() {
 
 	while (!glfwWindowShouldClose(window)) {
 		// Input
-		ProcessInput(window);
+		//ProcessInput(window);
 
 		// Rendering
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
