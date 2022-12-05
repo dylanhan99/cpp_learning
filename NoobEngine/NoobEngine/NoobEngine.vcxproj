@@ -73,21 +73,21 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
-    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(SolutionDir)NoobEngine\inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)dependencies\GLEW\lib;$(SolutionDir)dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
-    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(SolutionDir)NoobEngine\inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)dependencies\GLEW\lib;$(SolutionDir)dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(SolutionDir)NoobEngine\inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)dependencies\GLEW\lib;$(SolutionDir)dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(SolutionDir)NoobEngine\inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)dependencies\GLEW\lib;$(SolutionDir)dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

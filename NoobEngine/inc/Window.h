@@ -12,7 +12,8 @@ namespace NoobEngine
 		const char* title;
 		uint32_t width, height;
 
-		WindowProps(const char* title = "NoobEngine", uint32_t width = 800, uint32_t height = 600)
+		WindowProps(const char* title = "NoobEngine", 
+			uint32_t width = 800, uint32_t height = 600)
 			: title(title), width(width), height(height) {}
 	};
 
@@ -23,10 +24,19 @@ namespace NoobEngine
 		static uint32_t width, height;
 
 	public:
-		static GLFWwindow* CreateWindow(WindowProps props);
-		static void SetViewPort(uint32_t width, uint32_t height);
+		Window();
+		~Window();
 
-		static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-		static void ProcessInput(GLFWwindow* window);
+		static GLFWwindow* CreateWindow(WindowProps _props);
+		static void SetViewPort(uint32_t _width, uint32_t _height);
+		static int  WindowShouldClose(GLFWwindow* _window);
+		static void WindowShouldClose(GLFWwindow* _window, bool _tf);
+		static void TerminateWindow();
+
+		static void ProcessInput(GLFWwindow* _window);
+
+		static void SwapBuffers(GLFWwindow* _window);
+
+		static void framebuffer_size_callback(GLFWwindow* _window, int _width, int _height);
 	};
 }

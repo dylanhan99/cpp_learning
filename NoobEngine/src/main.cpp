@@ -4,21 +4,12 @@
 #include <glad.h>
 #include <glfw3.h>
 
-#include "../inc/Window.h"
+#include "Window.h"
+
+using namespace NoobEngine;
 
 int main() {
-	// Init stuff
-	if (!glfwInit()) {
-		std::cout << "GLFW init fail\n";
-		glfwTerminate();
-		return -1;
-	}
-	//if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-	//	std::cout << "Failed to initialize GLAD" << std::endl;
-	//	return -1;
-	//}
-
-	GLFWwindow* window = NoobEngine::Window::CreateWindow(NoobEngine::WindowProps());
+	GLFWwindow* window = Window::CreateWindow(WindowProps());
 	if (!window) {
 		return -1;
 	}
@@ -89,9 +80,9 @@ int main() {
 	glEnableVertexAttribArray(0);
 
 
-	while (!glfwWindowShouldClose(window)) {
+	while (!Window::WindowShouldClose(window)) {
 		// Input
-		//ProcessInput(window);
+		Window::ProcessInput(window);
 
 		// Rendering
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -102,13 +93,10 @@ int main() {
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
-		// Check and call events, swap buffers
-		glfwSwapBuffers(window);
-		glfwPollEvents();
+		Window::SwapBuffers(window);
 	}
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
-	glfwTerminate();
 	return 0;
 }
