@@ -5,10 +5,15 @@
 #include <glfw3.h>
 
 #include "Window.h"
+#include "Log.h"
+#include "Asserts.h"
 
 using namespace NoobEngine;
 
 int main() {
+	LOG_WARN("Vector x%d y%d z%d", 15, 32, 144);
+	MY_ASSERT(1 == 0);
+
 	GLFWwindow* window = Window::CreateWindow(WindowProps());
 	if (!window) {
 		return -1;
