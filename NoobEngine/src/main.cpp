@@ -19,9 +19,7 @@ int main() {
 	//MY_ASSERT_DEBUG(1 == 0);// , "Failed to execute function");
 
 	GLFWwindow* window = Window::CreateWindow(WindowProps());
-	if (!window) {
-		return -1;
-	}
+	MY_ASSERT(window);
 
 	// Vertices data
 	float vertices[] = {
