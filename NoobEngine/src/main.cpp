@@ -16,7 +16,7 @@ int main() {
 	LOG_WARN( "WARN x%d y%d z%d", 15, 32, 144);
 	LOG_ERROR("ERROR x%d y%d z%d", 15, 32, 144);
 	LOG_FATAL("FATAL x%d y%d z%d", 15, 32, 144);
-	//MY_ASSERT_MSG(1 == 0, "Failed to execute function");
+	MY_ASSERT_DEBUG(1 == 0);// , "Failed to execute function");
 
 	GLFWwindow* window = Window::CreateWindow(WindowProps());
 	if (!window) {

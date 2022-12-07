@@ -55,6 +55,19 @@ namespace NoobEngine { namespace Log {
 
 void Log_Assertion_Failure(const char* expr, const char* msg, const char* file, unsigned int line);
 
+#ifdef _DEBUG
+#define MY_ASSERT_DEBUG(expr)											\
+	{																	\
+		if (expr) {}													\
+		else {															\
+			Log_Assertion_Failure(#expr, "", __FILE__, __LINE__);		\
+			debugBreak();												\
+		}																\
+	}
+#else
+#define MY_ASSERT_DEBUG(expr) // do nothing if release
+#endif
+
 #define MY_ASSERT(expr)													\
 	{																	\
 		if (expr) {}													\
@@ -72,19 +85,6 @@ void Log_Assertion_Failure(const char* expr, const char* msg, const char* file, 
 			debugBreak();												\
 		}																\
 	}
-
-#ifdef _DEBUG
-#define MY_ASSERT_DEBUG(expr)											\
-	{																	\
-		if (expr) {}													\
-		else {															\
-			Log_Assertion_Failure(#expr, "", __FILE__, __LINE__);		\
-			debugBreak();												\
-		}																\
-	}
-#else
-#define MY_ASSERT_DEBUG(expr) // do nothing if release
-#endif
 
 #ifdef _DEBUG
 //#define LOG_TRACE(...)	NoobEngine::Log::Log_Message(NoobEngine::Log::LOG_LEVEL_TRACE, ##__VA_ARGS__)
