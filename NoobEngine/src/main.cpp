@@ -6,13 +6,12 @@
 
 #include "Window.h"
 #include "Log.h"
-#include "Asserts.h"
 
 using namespace NoobEngine;
 
 int main() {
 	LOG_WARN("Vector x%d y%d z%d", 15, 32, 144);
-	MY_ASSERT(1 == 0);
+	MY_ASSERT_MSG(1 == 0, "Failed to execute function");
 
 	GLFWwindow* window = Window::CreateWindow(WindowProps());
 	if (!window) {

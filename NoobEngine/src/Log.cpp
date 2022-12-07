@@ -1,5 +1,4 @@
 #include "Log.h"
-#include "Asserts.h"
 
 namespace NoobEngine { namespace Log {
 	

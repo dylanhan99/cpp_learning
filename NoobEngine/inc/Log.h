@@ -5,6 +5,13 @@
 #include <cstdio>
 #include <iostream>
 
+#if _MSC_VER
+#include <intrin.h>
+#define debugBreak() __MACHINE(__debugbreak())
+#else 
+#define debugBreak() __builtin_trap()
+#endif
+
 namespace NoobEngine { namespace Log {
 	//const char* m_reset("\033[0m");
 	enum Log_Level {
@@ -46,9 +53,49 @@ namespace NoobEngine { namespace Log {
 	}
 }}
 
+void Log_Assertion_Failure(const char* expr, const char* msg, const char* file, unsigned int line);
+
+#define MY_ASSERT(expr)													\
+	{																	\
+		if (expr) {}													\
+		else {															\
+			Log_Assertion_Failure(#expr, "", __FILE__, __LINE__);		\
+			debugBreak();												\
+		}																\
+	}
+
+#define MY_ASSERT_MSG(expr, msg)										\
+	{																	\
+		if (expr) {}													\
+		else {															\
+			Log_Assertion_Failure(#expr, msg, __FILE__, __LINE__);		\
+			debugBreak();												\
+		}																\
+	}
+
+#ifdef _DEBUG
+#define MY_ASSERT_DEBUG(expr)											\
+	{																	\
+		if (expr) {}													\
+		else {															\
+			Log_Assertion_Failure(#expr, "", __FILE__, __LINE__);		\
+			debugBreak();												\
+		}																\
+	}
+#else
+#define MY_ASSERT_DEBUG(expr) // do nothing if release
+#endif
+
+#ifdef _DEBUG
 #define LOG_TRACE(...)	NoobEngine::Log::Log_Message(NoobEngine::Log::LOG_LEVEL_TRACE, ##__VA_ARGS__)
 #define LOG_DEBUG(...)	NoobEngine::Log::Log_Message(NoobEngine::Log::LOG_LEVEL_DEBUG, ##__VA_ARGS__)
 #define LOG_INFO(...)	NoobEngine::Log::Log_Message(NoobEngine::Log::LOG_LEVEL_INFO , ##__VA_ARGS__)
 #define LOG_WARN(...)	NoobEngine::Log::Log_Message(NoobEngine::Log::LOG_LEVEL_WARN , ##__VA_ARGS__)
+#else
+#define LOG_TRACE(...)
+#define LOG_DEBUG(...)
+#define LOG_INFO(...)
+#define LOG_WARN(...)
+#endif
 #define LOG_ERROR(...)	NoobEngine::Log::Log_Message(NoobEngine::Log::LOG_LEVEL_ERROR, ##__VA_ARGS__)
 #define LOG_FATAL(...)	NoobEngine::Log::Log_Message(NoobEngine::Log::LOG_LEVEL_FATAL, ##__VA_ARGS__)
