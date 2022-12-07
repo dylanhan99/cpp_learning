@@ -10,8 +10,13 @@
 using namespace NoobEngine;
 
 int main() {
-	LOG_WARN("Vector x%d y%d z%d", 15, 32, 144);
-	MY_ASSERT_MSG(1 == 0, "Failed to execute function");
+	LOG_TRACE("TRACE x%d y%d z%d", 15, 32, 144);
+	LOG_DEBUG("DEBUG x%d y%d z%d", 15, 32, 144);
+	LOG_INFO( "INFO x%d y%d z%d", 15, 32, 144);
+	LOG_WARN( "WARN x%d y%d z%d", 15, 32, 144);
+	LOG_ERROR("ERROR x%d y%d z%d", 15, 32, 144);
+	LOG_FATAL("FATAL x%d y%d z%d", 15, 32, 144);
+	//MY_ASSERT_MSG(1 == 0, "Failed to execute function");
 
 	GLFWwindow* window = Window::CreateWindow(WindowProps());
 	if (!window) {

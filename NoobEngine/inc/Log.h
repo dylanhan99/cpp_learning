@@ -23,12 +23,12 @@ namespace NoobEngine { namespace Log {
 		LOG_LEVEL_FATAL
 	};
 	static const char* Log_Color[6] = {
-		"\033[0;31m",
+		"\033[0;39m",
+		"\033[0;39m",
 		"\033[0;32m",
 		"\033[0;33m",
-		"\033[0;34m",
-		"\033[0;35m",
-		"\033[0;36m"
+		"\033[0;31m",
+		"\033[1;31m"
 	};
 	static const char* Log_Header[6] = {
 		"[TRACE]: ",
@@ -87,15 +87,19 @@ void Log_Assertion_Failure(const char* expr, const char* msg, const char* file, 
 #endif
 
 #ifdef _DEBUG
+//#define LOG_TRACE(...)	NoobEngine::Log::Log_Message(NoobEngine::Log::LOG_LEVEL_TRACE, ##__VA_ARGS__)
+//#define LOG_DEBUG(...)	NoobEngine::Log::Log_Message(NoobEngine::Log::LOG_LEVEL_DEBUG, ##__VA_ARGS__)
+//#define LOG_INFO(...)	NoobEngine::Log::Log_Message(NoobEngine::Log::LOG_LEVEL_INFO , ##__VA_ARGS__)
+//#define LOG_WARN(...)	NoobEngine::Log::Log_Message(NoobEngine::Log::LOG_LEVEL_WARN , ##__VA_ARGS__)
+#else
+//#define LOG_TRACE(...)
+//#define LOG_DEBUG(...)
+//#define LOG_INFO(...)
+//#define LOG_WARN(...)
+#endif
 #define LOG_TRACE(...)	NoobEngine::Log::Log_Message(NoobEngine::Log::LOG_LEVEL_TRACE, ##__VA_ARGS__)
 #define LOG_DEBUG(...)	NoobEngine::Log::Log_Message(NoobEngine::Log::LOG_LEVEL_DEBUG, ##__VA_ARGS__)
 #define LOG_INFO(...)	NoobEngine::Log::Log_Message(NoobEngine::Log::LOG_LEVEL_INFO , ##__VA_ARGS__)
 #define LOG_WARN(...)	NoobEngine::Log::Log_Message(NoobEngine::Log::LOG_LEVEL_WARN , ##__VA_ARGS__)
-#else
-#define LOG_TRACE(...)
-#define LOG_DEBUG(...)
-#define LOG_INFO(...)
-#define LOG_WARN(...)
-#endif
 #define LOG_ERROR(...)	NoobEngine::Log::Log_Message(NoobEngine::Log::LOG_LEVEL_ERROR, ##__VA_ARGS__)
 #define LOG_FATAL(...)	NoobEngine::Log::Log_Message(NoobEngine::Log::LOG_LEVEL_FATAL, ##__VA_ARGS__)
