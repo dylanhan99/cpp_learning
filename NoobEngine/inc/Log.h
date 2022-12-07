@@ -22,7 +22,7 @@ namespace NoobEngine { namespace Log {
 		LOG_LEVEL_ERROR,
 		LOG_LEVEL_FATAL
 	};
-	static const char* Log_Color[6] = {
+	const char* Log_Color[6] = {
 		"\033[0;39m",
 		"\033[0;39m",
 		"\033[0;32m",
@@ -30,7 +30,7 @@ namespace NoobEngine { namespace Log {
 		"\033[0;31m",
 		"\033[1;31m"
 	};
-	static const char* Log_Header[6] = {
+	const char* Log_Header[6] = {
 		"[TRACE]: ",
 		"[DEBUG]: ",
 		"[INFO]: ",
@@ -38,7 +38,7 @@ namespace NoobEngine { namespace Log {
 		"[ERROR]: ",
 		"[FATAL]: "
 	};
-	inline static void Log_Message(Log_Level lvl, const char* fmt, ...)
+	void Log_Message(Log_Level lvl, const char* fmt, ...)
 	{
 		char buffer[2048] = { 0 };
 		va_list args;
