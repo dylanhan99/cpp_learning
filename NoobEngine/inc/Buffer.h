@@ -13,6 +13,7 @@
 #pragma once
 #include <vector>
 #include <glad.h>
+#include <glm.hpp>
 #include "Log.h"
 
 namespace NoobEngine { namespace Graphics {

@@ -31,6 +31,13 @@ namespace NoobEngine { namespace Graphics {
 		m_Stride += _count * BufferElement::GetSizeOfType(GL_UNSIGNED_INT);
 	}
 
+	template<>
+	void BufferLayout::Push<glm::vec4>(unsigned int _count)
+	{
+		m_Elements.push_back({ GL_FLOAT, (unsigned int)glm::vec4::length(), GL_TRUE });
+		m_Stride += _count * sizeof(glm::vec4);
+	}
+
 	/**
 	 * Vertex Array
 	 */
