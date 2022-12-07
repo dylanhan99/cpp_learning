@@ -80,6 +80,12 @@ namespace NoobEngine { namespace Graphics {
 	 * Vertex Buffer
 	 */
 
+	VertexBuffer::VertexBuffer()
+		: m_RendererID(0)
+	{
+		
+	}
+
 	VertexBuffer::VertexBuffer(unsigned int _size)
 	{
 		glGenBuffers(1, &m_RendererID);
@@ -105,6 +111,12 @@ namespace NoobEngine { namespace Graphics {
 	/**
 	 * Index Buffer
 	 */
+
+	IndexBuffer::IndexBuffer()
+		: m_RendererID(0), m_Count(0)
+	{
+
+	}
 
 	IndexBuffer::IndexBuffer(const unsigned int* _data, unsigned int _count)
 		: m_Count(_count)

@@ -61,6 +61,7 @@ class VertexBuffer
 private:
 	unsigned int m_RendererID;
 public:
+	VertexBuffer();
 	VertexBuffer(unsigned int _size);
 	~VertexBuffer();
 
@@ -87,6 +88,7 @@ private:
 	unsigned int m_RendererID;
 	unsigned int m_Count;
 public:
+	IndexBuffer();
 	IndexBuffer(const unsigned int *_data, unsigned int _count);
 	~IndexBuffer();
 
