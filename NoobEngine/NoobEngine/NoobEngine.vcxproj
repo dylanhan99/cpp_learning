@@ -155,12 +155,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\Buffer.cpp" />
     <ClCompile Include="..\src\glad.c" />
     <ClCompile Include="..\src\Log.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\inc\Buffer.h" />
     <ClInclude Include="..\inc\Log.h" />
     <ClInclude Include="..\inc\Window.h" />
   </ItemGroup>
