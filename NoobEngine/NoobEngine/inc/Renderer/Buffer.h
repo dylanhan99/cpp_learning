@@ -11,10 +11,9 @@
  */
 
 #pragma once
-#include <vector>
+#include "nepch.h"
 #include <glad.h>
-#include <glm.hpp>
-#include "Log/Log.h"
+#include <glfw3.h>
 
 namespace NoobEngine { namespace Graphics {
 

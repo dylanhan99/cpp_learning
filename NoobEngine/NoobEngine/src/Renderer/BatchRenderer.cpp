@@ -1,6 +1,5 @@
+#include "nepch.h"
 #include "Renderer/BatchRenderer.h"
-#include <glm.hpp>
-#include <memory>
 
 namespace NoobEngine { namespace Graphics {
 

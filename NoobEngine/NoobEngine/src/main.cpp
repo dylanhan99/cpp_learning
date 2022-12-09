@@ -1,11 +1,10 @@
 #define GLFW_INCLUDE_NONE
+#include "nepch.h"
 
-#include <iostream>
 #include <glad.h>
 #include <glfw3.h>
 
 #include "Core/Window.h"
-#include "Log/Log.h"
 #include "Renderer/BatchRenderer.h"
 
 using namespace NoobEngine;

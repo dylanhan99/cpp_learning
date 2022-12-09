@@ -1,8 +1,8 @@
+#include "nepch.h"
 #include "Core/Window.h"
 
 #include <glad.h>
 #include <glfw3.h>
-#include <iostream>
 
 namespace NoobEngine
 {
