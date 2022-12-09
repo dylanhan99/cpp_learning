@@ -17,27 +17,6 @@ namespace NoobEngine { namespace Graphics {
 
 	}
 
-	template<>
-	void BufferLayout::Push<float>(unsigned int _count)
-	{
-		m_Elements.push_back({ GL_FLOAT, _count, GL_FALSE });
-		m_Stride += _count * BufferElement::GetSizeOfType(GL_FLOAT);
-	}
-
-	template<>
-	void BufferLayout::Push<unsigned int>(unsigned int _count)
-	{
-		m_Elements.push_back({ GL_UNSIGNED_INT, _count, GL_FALSE });
-		m_Stride += _count * BufferElement::GetSizeOfType(GL_UNSIGNED_INT);
-	}
-
-	template<>
-	void BufferLayout::Push<glm::vec4>(unsigned int _count)
-	{
-		m_Elements.push_back({ GL_FLOAT, (unsigned int)glm::vec4::length(), GL_TRUE });
-		m_Stride += _count * sizeof(glm::vec4);
-	}
-
 	/**
 	 * Vertex Array
 	 */
@@ -56,14 +35,23 @@ namespace NoobEngine { namespace Graphics {
 	{
 		Bind();
 		_vbo.Bind();
+		float vertices[] = {
+		0.5f,  0.5f, 0.0f, 1.0f,  // top right
+		0.5f, -0.5f, 0.0f, 1.0f,  // bottom right
+		-0.5f, -0.5f, 0.0f, 1.0f,  // bottom left
+		-0.5f,  0.5f, 0.0f, 1.0f   // top left 
+		};
+		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(0);
 
-		const auto& elements = _layout.GetElements();
-		for (unsigned int i = 0, offset = 0; i < elements.size(); ++i) {
-			const auto& element = elements[i];
-			glVertexAttribPointer(i, element.count, element.type, element.normalized, 
-				_layout.GetStride(), (const GLvoid*)offset);
-			offset += element.count * BufferElement::GetSizeOfType(element.type);
-		}
+		//const auto& elements = _layout.GetElements();
+		//for (unsigned int i = 0, offset = 0; i < elements.size(); ++i) {
+		//	const auto& element = elements[i];
+		//	glVertexAttribPointer(i, element.count, element.type, element.normalized, 
+		//		_layout.GetStride(), (const GLvoid*)offset);
+		//	glEnableVertexAttribArray(i);
+		//	offset += element.count * BufferElement::GetSizeOfType(element.type);
+		//}
 	}
 
 	void VertexArray::Bind() const
@@ -90,7 +78,14 @@ namespace NoobEngine { namespace Graphics {
 	{
 		glGenBuffers(1, &m_RendererID);
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-		glBufferData(GL_ARRAY_BUFFER, _size, nullptr, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, _size, NULL, GL_DYNAMIC_DRAW);
+	}
+
+	VertexBuffer::VertexBuffer(unsigned int _size, const float* _data)
+	{
+		glGenBuffers(1, &m_RendererID);
+		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+		glBufferData(GL_ARRAY_BUFFER, _size, _data, GL_STATIC_DRAW);
 	}
 
 	VertexBuffer::~VertexBuffer()
@@ -122,8 +117,9 @@ namespace NoobEngine { namespace Graphics {
 		: m_Count(_count)
 	{
 		glGenBuffers(1, &m_RendererID);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
+		Bind();
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, _count * sizeof(unsigned int), _data, GL_STATIC_DRAW);
+		Unbind();
 	}
 
 	IndexBuffer::~IndexBuffer()
@@ -133,12 +129,12 @@ namespace NoobEngine { namespace Graphics {
 
 	void IndexBuffer::Bind() const
 	{
-		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
 	}
 
 	void IndexBuffer::Unbind() const
 	{
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
 }}

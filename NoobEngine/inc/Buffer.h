@@ -52,6 +52,27 @@ public:
 		MY_ASSERT(false);
 	}
 
+	template<>
+	void Push<float>(unsigned int _count)
+	{
+		m_Elements.push_back({ GL_FLOAT, _count, GL_FALSE });
+		m_Stride += _count * BufferElement::GetSizeOfType(GL_FLOAT);
+	}
+
+	template<>
+	void Push<unsigned int>(unsigned int _count)
+	{
+		m_Elements.push_back({ GL_UNSIGNED_INT, _count, GL_FALSE });
+		m_Stride += _count * BufferElement::GetSizeOfType(GL_UNSIGNED_INT);
+	}
+
+	template<>
+	void Push<glm::vec4>(unsigned int _count)
+	{
+		m_Elements.push_back({ GL_FLOAT, (unsigned int)glm::vec4::length(), GL_TRUE });
+		m_Stride += _count * sizeof(glm::vec4);
+	}
+
 	inline const std::vector<BufferElement>& GetElements()	const { return m_Elements; }
 	inline		 unsigned int				 GetStride()	const { return m_Stride; }
 };
@@ -63,6 +84,7 @@ private:
 public:
 	VertexBuffer();
 	VertexBuffer(unsigned int _size);
+	VertexBuffer(unsigned int _size, const float* _data);
 	~VertexBuffer();
 
 	void Bind() const;

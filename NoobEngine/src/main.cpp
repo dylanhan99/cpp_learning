@@ -6,38 +6,40 @@
 
 #include "Window.h"
 #include "Log.h"
+#include "BatchRenderer.h"
 
 using namespace NoobEngine;
 
 int main() {
-	LOG_TRACE("TRACE x%d y%d z%d", 15, 32, 144);
-	LOG_DEBUG("DEBUG x%d y%d z%d", 15, 32, 144);
-	LOG_INFO( "INFO x%d y%d z%d", 15, 32, 144);
-	LOG_WARN( "WARN x%d y%d z%d", 15, 32, 144);
-	LOG_ERROR("ERROR x%d y%d z%d", 15, 32, 144);
-	LOG_FATAL("FATAL x%d y%d z%d", 15, 32, 144);
 	//MY_ASSERT_DEBUG(1 == 0);// , "Failed to execute function");
-
 	GLFWwindow* window = Window::CreateWindow(WindowProps());
 	MY_ASSERT(window);
+	LOG_INFO((const char*)glGetString(GL_VERSION));
 
+	Graphics::BatchRenderer2D renderer = Graphics::BatchRenderer2D();
+
+	
 	// Vertices data
 	float vertices[] = {
-	 0.5f,  0.5f, 0.0f,  // top right
-	 0.5f, -0.5f, 0.0f,  // bottom right
-	-0.5f, -0.5f, 0.0f,  // bottom left
-	-0.5f,  0.5f, 0.0f   // top left 
+	 0.5f,  0.5f, 0.0f, 1.0f,  // top right
+	 0.5f, -0.5f, 0.0f, 1.0f,  // bottom right
+	-0.5f, -0.5f, 0.0f, 1.0f,  // bottom left
+	-0.5f,  0.5f, 0.0f, 1.0f   // top left 
 	};
 	unsigned int indices[] = {  // note that we start from 0!
 		0, 1, 3,   // first triangle
 		1, 2, 3    // second triangle
 	};
-
+	
 	const char* vertexShaderSource = "#version 330 core\n"
-		"layout (location = 0) in vec3 aPos;\n"
+		"layout(location = 0) in vec4    position;\n"
+		"uniform mat4 pr_matrix;"
+		"uniform mat4 vw_matrix = mat4(1.0);"
+		"uniform mat4 ml_matrix = mat4(1.0);"
 		"void main()\n"
 		"{\n"
-		"gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+		//"gl_Position = pr_matrix * vw_matrix * ml_matrix * position;\n"
+		"gl_Position = position;\n"
 		"}\0";
 	unsigned int vertexShader;
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -77,23 +79,7 @@ int main() {
 		std::cout << "Failed to link SHADER PROGRAM!\n";
 	}
 
-	unsigned int VBO, EBO;
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
-	unsigned int VAO;
-	glGenVertexArrays(1, &VAO);
-
-	// bind vertex array obj
-	glBindVertexArray(VAO);
-	// copy vertices into buffer for opengl
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-	// set vertex attrib pointers
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
+	
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -102,13 +88,17 @@ int main() {
 		Window::ProcessInput(window);
 
 		// Rendering
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		Window::Clear();
 
 		// use shader program to render item
 		glUseProgram(shaderProgram);
-		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		//glUniform4f(glGetUniformLocation(shaderProgram, "ml_matrix"), vector.x, vector.y, vector.z, vector.w);
+
+
+		renderer.Begin();
+		renderer.Submit(glm::vec4(0.5f, 0.5f, 0.0f, 1.f));
+		renderer.End();
+		renderer.Flush();
 
 		Window::SwapBuffers(window);
 	}

@@ -33,8 +33,8 @@ namespace NoobEngine
 		static void WindowShouldClose(GLFWwindow* _window, bool _tf);
 		static void TerminateWindow();
 
+		static void Clear();
 		static void ProcessInput(GLFWwindow* _window);
-
 		static void SwapBuffers(GLFWwindow* _window);
 
 		static void framebuffer_size_callback(GLFWwindow* _window, int _width, int _height);
