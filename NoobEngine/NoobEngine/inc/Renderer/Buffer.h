@@ -14,7 +14,7 @@
 #include <vector>
 #include <glad.h>
 #include <glm.hpp>
-#include "Log.h"
+#include "Log/Log.h"
 
 namespace NoobEngine { namespace Graphics {
 

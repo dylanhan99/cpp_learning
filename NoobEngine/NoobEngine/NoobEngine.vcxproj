@@ -18,6 +18,20 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Renderer\BatchRenderer.cpp" />
+    <ClCompile Include="src\Renderer\buffer.cpp" />
+    <ClCompile Include="src\glad.c" />
+    <ClCompile Include="src\Log\Log.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Core\Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\Renderer\BatchRenderer.h" />
+    <ClInclude Include="inc\Renderer\Buffer.h" />
+    <ClInclude Include="inc\Log\Log.h" />
+    <ClInclude Include="inc\Core\Window.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -73,21 +87,21 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
-    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(SolutionDir)NoobEngine\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(ProjectDir)\inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)dependencies\GLEW\lib;$(SolutionDir)dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
-    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(SolutionDir)NoobEngine\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(ProjectDir)\inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)dependencies\GLEW\lib;$(SolutionDir)dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(SolutionDir)NoobEngine\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(ProjectDir)\inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)dependencies\GLEW\lib;$(SolutionDir)dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(SolutionDir)NoobEngine\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(ProjectDir)\inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)dependencies\GLEW\lib;$(SolutionDir)dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -154,20 +168,6 @@
       <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\src\BatchRenderer.cpp" />
-    <ClCompile Include="..\src\Buffer.cpp" />
-    <ClCompile Include="..\src\glad.c" />
-    <ClCompile Include="..\src\Log.cpp" />
-    <ClCompile Include="..\src\main.cpp" />
-    <ClCompile Include="..\src\Window.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\inc\BatchRenderer.h" />
-    <ClInclude Include="..\inc\Buffer.h" />
-    <ClInclude Include="..\inc\Log.h" />
-    <ClInclude Include="..\inc\Window.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

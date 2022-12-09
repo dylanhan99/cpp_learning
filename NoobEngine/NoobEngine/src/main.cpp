@@ -4,9 +4,9 @@
 #include <glad.h>
 #include <glfw3.h>
 
-#include "Window.h"
-#include "Log.h"
-#include "BatchRenderer.h"
+#include "Core/Window.h"
+#include "Log/Log.h"
+#include "Renderer/BatchRenderer.h"
 
 using namespace NoobEngine;
 
@@ -96,7 +96,8 @@ int main() {
 
 
 		renderer.Begin();
-		renderer.Submit(glm::vec4(0.5f, 0.5f, 0.0f, 1.f));
+		renderer.Submit(glm::vec4(0.f, 0.f, 0.0f, 1.f));
+		renderer.Submit(glm::vec4(1.f, 0.5f, 0.0f, 1.f));
 		renderer.End();
 		renderer.Flush();
 
