@@ -18,7 +18,7 @@
     <ClCompile Include="src\Renderer\BatchRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\buffer.cpp">
+    <ClCompile Include="src\Renderer\Buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\glad.c">
@@ -36,21 +36,33 @@
     <ClCompile Include="src\nepch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Shaders\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utilities\Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\Renderer\BatchRenderer.h">
+    <ClInclude Include="src\Renderer\BatchRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Renderer\Buffer.h">
+    <ClInclude Include="src\Renderer\Buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Log\Log.h">
+    <ClInclude Include="src\Log\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\Window.h">
+    <ClInclude Include="src\Core\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\nepch.h">
+    <ClInclude Include="src\nepch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shaders\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utilities\Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

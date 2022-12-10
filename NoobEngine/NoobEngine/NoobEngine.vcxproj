@@ -30,7 +30,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">nepch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="src\Renderer\BatchRenderer.cpp" />
-    <ClCompile Include="src\Renderer\buffer.cpp" />
+    <ClCompile Include="src\Renderer\Buffer.cpp" />
     <ClCompile Include="src\glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -40,13 +40,17 @@
     <ClCompile Include="src\Log\Log.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Core\Window.cpp" />
+    <ClCompile Include="src\Shaders\Shader.cpp" />
+    <ClCompile Include="src\Utilities\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\nepch.h" />
-    <ClInclude Include="inc\Renderer\BatchRenderer.h" />
-    <ClInclude Include="inc\Renderer\Buffer.h" />
-    <ClInclude Include="inc\Log\Log.h" />
-    <ClInclude Include="inc\Core\Window.h" />
+    <ClInclude Include="src\nepch.h" />
+    <ClInclude Include="src\Renderer\BatchRenderer.h" />
+    <ClInclude Include="src\Renderer\Buffer.h" />
+    <ClInclude Include="src\Log\Log.h" />
+    <ClInclude Include="src\Core\Window.h" />
+    <ClInclude Include="src\Shaders\Shader.h" />
+    <ClInclude Include="src\Utilities\Utils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -103,21 +107,21 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
-    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(ProjectDir)\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(ProjectDir)\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)dependencies\GLEW\lib;$(SolutionDir)dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
-    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(ProjectDir)\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(ProjectDir)\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)dependencies\GLEW\lib;$(SolutionDir)dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(ProjectDir)\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(ProjectDir)\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)dependencies\GLEW\lib;$(SolutionDir)dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(ProjectDir)\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dependencies\GLEW\inc;$(SolutionDir)dependencies\GLFW\inc;$(SolutionDir)dependencies\glm;$(SolutionDir)dependencies\glad\inc;$(ProjectDir)\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)dependencies\GLEW\lib;$(SolutionDir)dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
