@@ -1,7 +1,5 @@
 #include "nepch.h"
 
-#include <glfw3.h>
-
 #include "Core/Window.h"
 #include "Renderer/BatchRenderer.h"
 #include "Shaders/Shader.h"

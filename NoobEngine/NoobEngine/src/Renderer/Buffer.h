@@ -11,7 +11,6 @@
  */
 
 #pragma once
-#include <glfw3.h>
 
 namespace NoobEngine { namespace Graphics {
 

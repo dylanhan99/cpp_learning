@@ -1,8 +1,6 @@
 #include "nepch.h"
 #include "Window.h"
 
-#include <glfw3.h>
-
 namespace NoobEngine
 {
 	Window::Window()
