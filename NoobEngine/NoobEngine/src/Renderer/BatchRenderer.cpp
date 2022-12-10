@@ -11,7 +11,9 @@ namespace NoobEngine { namespace Graphics {
 		layout.Push<glm::vec4>(1);
 		m_VAO.AddBuffer(m_VBO, layout); 
 		
-		unsigned int indices[RENDERER_INDICES_SIZE];
+		unsigned int *indices = (unsigned int*)malloc(RENDERER_INDICES_SIZE * sizeof(unsigned int));
+		if (!indices)
+			MY_ASSERT_MSG(indices, "Failed to initialize indices in BatchRenderer2D.");
 		unsigned int offset = 0;
 		for (size_t i = 0; i < RENDERER_INDICES_SIZE; i += 6)
 		{
@@ -27,6 +29,7 @@ namespace NoobEngine { namespace Graphics {
 		}
 
 		m_IBO = new IndexBuffer(indices, RENDERER_INDICES_SIZE);
+		free((void*)indices);
 	}
 
 	BatchRenderer2D::~BatchRenderer2D()
