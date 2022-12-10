@@ -9,6 +9,7 @@
 #include <vector>
 
 #include <glad.h>
+#include <glfw3.h>
 #include <glm.hpp>
 
 #include "Log/Log.h"
