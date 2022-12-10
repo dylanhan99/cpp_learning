@@ -1,5 +1,5 @@
 #include "nepch.h"
-#include "Renderer/Buffer.h"
+#include "Buffer.h"
 
 namespace NoobEngine { namespace Graphics {
 

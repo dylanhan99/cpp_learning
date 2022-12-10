@@ -1,7 +1,6 @@
 #include "nepch.h"
-#include "Core/Window.h"
+#include "Window.h"
 
-#include <glad.h>
 #include <glfw3.h>
 
 namespace NoobEngine
