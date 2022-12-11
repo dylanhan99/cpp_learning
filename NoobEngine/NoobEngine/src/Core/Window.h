@@ -26,6 +26,7 @@ namespace NoobEngine
 		Window();
 		~Window();
 
+
 		static GLFWwindow* CreateWindow(WindowProps _props);
 		static void SetViewPort(uint32_t _width, uint32_t _height);
 		static int  WindowShouldClose(GLFWwindow* _window);

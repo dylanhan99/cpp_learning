@@ -1,5 +1,6 @@
 #include "nepch.h"
 #include "Window.h"
+#include "Events/Input.h"
 
 namespace NoobEngine
 {
@@ -41,6 +42,9 @@ namespace NoobEngine
 		SetViewPort(800, 600);
 		// Setup callbacks
 		glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+		glfwSetKeyCallback(window, Events::Input::Keyboard);
+		glfwSetMouseButtonCallback(window, Events::Input::Mouse);
+		glfwSetCursorPosCallback(window, Events::Input::Cursor);
 
 		return window;
 	}
