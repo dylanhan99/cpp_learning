@@ -3,9 +3,32 @@
 #include "Core/Window.h"
 #include "Renderer/BatchRenderer.h"
 #include "Shaders/Shader.h"
+#include "Events/Event.h"
+#include "Events/Input.h"
 
 #define GLFW_INCLUDE_NONE
 using namespace NoobEngine;
+
+void foo()
+{
+	LOG_TRACE("This is foo lmao");
+}
+
+void foo2()
+{
+	LOG_TRACE("futapog");
+}
+
+void ccc()
+{
+	LOG_TRACE("This is ccc lmao");
+}
+
+void ccc2()
+{
+	LOG_TRACE("ccaw");
+}
+
 
 int main() {
 	//MY_ASSERT_DEBUG(1 == 0);// , "Failed to execute function");
@@ -15,7 +38,7 @@ int main() {
 
 	Graphics::BatchRenderer2D renderer;
 	Graphics::ShaderProgram shader("../../assets/Shaders/vertex.shader", "../../assets/Shaders/fragment.shader");
-	
+
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 

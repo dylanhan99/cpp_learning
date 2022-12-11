@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Events\Event.cpp" />
     <ClCompile Include="src\Events\Input.cpp" />
     <ClCompile Include="src\nepch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -45,6 +46,7 @@
     <ClCompile Include="src\Utilities\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Events\Event.h" />
     <ClInclude Include="src\Events\Input.h" />
     <ClInclude Include="src\nepch.h" />
     <ClInclude Include="src\Renderer\BatchRenderer.h" />

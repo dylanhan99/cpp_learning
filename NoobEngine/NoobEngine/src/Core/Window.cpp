@@ -77,30 +77,7 @@ namespace NoobEngine
 
 	void Window::ProcessInput(GLFWwindow* _window)
 	{
-		//if (glfwGetKey(_window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-		//	WindowShouldClose(_window, true);
-		//}
-		if (Events::Input::OnKeyPress(GLFW_KEY_W)) {
-			LOG_TRACE("Pressed W");
-		}
-		if (Events::Input::OnKeyRepeat(GLFW_KEY_W)) {
-			LOG_TRACE("Rep W");
-		}
-		if (Events::Input::OnKeyRelease(GLFW_KEY_W)) {
-			LOG_TRACE("Released W");
-		}
-
-		if (Events::Input::OnMouseClick(GLFW_MOUSE_BUTTON_LEFT)) {
-			LOG_TRACE("Clicked L");
-		}
-		if (Events::Input::OnMouseRepeat(GLFW_MOUSE_BUTTON_LEFT)) {
-			LOG_TRACE("Rep L");
-		}
-		if (Events::Input::OnMouseRelease(GLFW_MOUSE_BUTTON_LEFT)) {
-			LOG_TRACE("Release L");
-		}
-
-		LOG_TRACE("%f, %f", Events::Input::GetCursorX(), Events::Input::GetCursorY());
+	
 	}
 
 	void Window::SwapBuffers(GLFWwindow* _window)
