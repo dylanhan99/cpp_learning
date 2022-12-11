@@ -89,6 +89,18 @@ namespace NoobEngine
 		if (Events::Input::OnKeyRelease(GLFW_KEY_W)) {
 			LOG_TRACE("Released W");
 		}
+
+		if (Events::Input::OnMouseClick(GLFW_MOUSE_BUTTON_LEFT)) {
+			LOG_TRACE("Clicked L");
+		}
+		if (Events::Input::OnMouseRepeat(GLFW_MOUSE_BUTTON_LEFT)) {
+			LOG_TRACE("Rep L");
+		}
+		if (Events::Input::OnMouseRelease(GLFW_MOUSE_BUTTON_LEFT)) {
+			LOG_TRACE("Release L");
+		}
+
+		LOG_TRACE("%f, %f", Events::Input::GetCursorX(), Events::Input::GetCursorY());
 	}
 
 	void Window::SwapBuffers(GLFWwindow* _window)

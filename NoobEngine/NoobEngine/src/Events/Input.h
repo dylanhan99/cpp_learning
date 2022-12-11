@@ -22,10 +22,13 @@ namespace NoobEngine { namespace Events {
 		static bool OnKeyRepeat(unsigned int _key);
 		static bool OnKeyRelease(unsigned int _key);
 		
-		static bool OnMousePress(unsigned int _button);
+		static bool OnMouseClick(unsigned int _button);
+		static bool OnMouseRepeat(unsigned int _button);
 		static bool OnMouseRelease(unsigned int _button);
 
 		static glm::vec2 GetCursor();
+		static double GetCursorX();
+		static double GetCursorY();
 	};
 
 }}

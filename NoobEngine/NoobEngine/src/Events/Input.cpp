@@ -7,7 +7,7 @@ namespace NoobEngine { namespace Events {
 	std::vector<bool> Input::m_MouseButtons		= Input::AllFalse(GLFW_MOUSE_BUTTON_LAST);
 	std::vector<bool> Input::m_KeysPrev			= m_Keys;
 	std::vector<bool> Input::m_MouseButtonsPrev = m_MouseButtons;
-	glm::dvec2 Input::m_Cursor							= glm::dvec2(0, 0);
+	glm::dvec2 Input::m_Cursor					= glm::dvec2(0, 0);
 
 	std::vector<bool> Input::AllFalse(unsigned int _count)
 	{
@@ -58,19 +58,42 @@ namespace NoobEngine { namespace Events {
 		return true;
 	}
 
-	bool Input::OnMousePress(unsigned int _button)
+	bool Input::OnMouseClick(unsigned int _button)
 	{
-		return false;
+		if (!(m_MouseButtonsPrev[_button] != GLFW_PRESS && m_MouseButtons[_button] == GLFW_PRESS)) // if key within bounds
+			return false;
+		m_MouseButtonsPrev[_button] = m_MouseButtons[_button];
+		return true;
+	}
+
+	bool Input::OnMouseRepeat(unsigned int _button)
+	{
+		if (m_MouseButtons[_button] != GLFW_PRESS) // if key within bounds
+			return false;
+		return true;
 	}
 
 	bool Input::OnMouseRelease(unsigned int _button)
 	{
-		return false;
+		if (!(m_MouseButtonsPrev[_button] != GLFW_RELEASE && m_MouseButtons[_button] == GLFW_RELEASE)) // if key within bounds
+			return false;
+		m_MouseButtonsPrev[_button] = m_MouseButtons[_button];
+		return true;
 	}
 
 	glm::vec2 Input::GetCursor()
 	{
 		return m_Cursor;
+	}
+
+	double Input::GetCursorX()
+	{
+		return m_Cursor.x;
+	}
+
+	double Input::GetCursorY()
+	{
+		return m_Cursor.y;
 	}
 
 }}
