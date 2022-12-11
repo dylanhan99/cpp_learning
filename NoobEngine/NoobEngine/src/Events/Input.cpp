@@ -37,6 +37,14 @@ namespace NoobEngine { namespace Events {
 
 	bool Input::OnKeyPress(unsigned int _key)
 	{
+		if (!(m_KeysPrev[_key] != GLFW_PRESS && m_Keys[_key] == GLFW_PRESS)) // if key within bounds
+			return false;
+		m_KeysPrev[_key] = m_Keys[_key];
+		return true;
+	}
+
+	bool Input::OnKeyRepeat(unsigned int _key)
+	{
 		if (m_Keys[_key] != GLFW_PRESS) // if key within bounds
 			return false;
 		return true;

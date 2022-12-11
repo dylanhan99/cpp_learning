@@ -19,6 +19,7 @@ namespace NoobEngine { namespace Events {
 		static void Cursor(GLFWwindow* _window, double _xpos, double _ypos);
 	public:
 		static bool OnKeyPress(unsigned int _key);
+		static bool OnKeyRepeat(unsigned int _key);
 		static bool OnKeyRelease(unsigned int _key);
 		
 		static bool OnMousePress(unsigned int _button);

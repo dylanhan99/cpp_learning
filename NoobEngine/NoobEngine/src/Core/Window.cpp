@@ -83,6 +83,9 @@ namespace NoobEngine
 		if (Events::Input::OnKeyPress(GLFW_KEY_W)) {
 			LOG_TRACE("Pressed W");
 		}
+		if (Events::Input::OnKeyRepeat(GLFW_KEY_W)) {
+			LOG_TRACE("Rep W");
+		}
 		if (Events::Input::OnKeyRelease(GLFW_KEY_W)) {
 			LOG_TRACE("Released W");
 		}
