@@ -77,8 +77,14 @@ namespace NoobEngine
 
 	void Window::ProcessInput(GLFWwindow* _window)
 	{
-		if (glfwGetKey(_window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-			WindowShouldClose(_window, true);
+		//if (glfwGetKey(_window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		//	WindowShouldClose(_window, true);
+		//}
+		if (Events::Input::OnKeyPress(GLFW_KEY_W)) {
+			LOG_TRACE("Pressed W");
+		}
+		if (Events::Input::OnKeyRelease(GLFW_KEY_W)) {
+			LOG_TRACE("Released W");
 		}
 	}
 

@@ -3,9 +3,11 @@
 
 namespace NoobEngine { namespace Events {
 
-	glm::dvec2 Input::m_Cursor				= glm::dvec2(0, 0);
-	std::vector<bool> Input::m_Keys			= Input::AllFalse(GLFW_KEY_LAST);
-	std::vector<bool> Input::m_MouseButtons = Input::AllFalse(GLFW_MOUSE_BUTTON_LAST);
+	std::vector<bool> Input::m_Keys				= Input::AllFalse(GLFW_KEY_LAST);
+	std::vector<bool> Input::m_MouseButtons		= Input::AllFalse(GLFW_MOUSE_BUTTON_LAST);
+	std::vector<bool> Input::m_KeysPrev			= m_Keys;
+	std::vector<bool> Input::m_MouseButtonsPrev = m_MouseButtons;
+	glm::dvec2 Input::m_Cursor							= glm::dvec2(0, 0);
 
 	std::vector<bool> Input::AllFalse(unsigned int _count)
 	{
@@ -17,45 +19,43 @@ namespace NoobEngine { namespace Events {
 
 	void Input::Keyboard(GLFWwindow* _window, int _key, int _scancode, int _action, int _mods)
 	{
-		std::cout << _key << "\t" << _scancode << "\t" << _action << "\t" << _mods << std::endl;
+		m_KeysPrev[_key] = m_Keys[_key];
+		m_Keys[_key] = _action;
 	}
 
 	void Input::Mouse(GLFWwindow* _window, int _button, int _action, int _mods)
 	{
-		std::cout << _button << "\t" << _action << "\t" << _mods << std::endl;
+		m_MouseButtonsPrev[_button] = m_MouseButtons[_button];
+		m_MouseButtons[_button] = _action;
 	}
 
-	void Input::Cursor(GLFWwindow* window, double xpos, double ypos)
+	void Input::Cursor(GLFWwindow* _window, double _xpos, double _ypos)
 	{
-		std::cout << xpos << "\t" << ypos << std::endl;
+		m_Cursor.x = _xpos;
+		m_Cursor.y = _ypos;
 	}
 
-	bool Input::GetKeyPress(unsigned int _key)
+	bool Input::OnKeyPress(unsigned int _key)
 	{
-		return false;
+		if (m_Keys[_key] != GLFW_PRESS) // if key within bounds
+			return false;
+		return true;
 	}
 
-	bool Input::GetKeyRepeat(unsigned int _key)
+	bool Input::OnKeyRelease(unsigned int _key)
 	{
-		return false;
+		if (!(m_KeysPrev[_key] != GLFW_RELEASE && m_Keys[_key] == GLFW_RELEASE)) // if key within bounds
+			return false;
+		m_KeysPrev[_key] = m_Keys[_key];
+		return true;
 	}
 
-	bool Input::GetKeyRelease(unsigned int _key)
-	{
-		return false;
-	}
-
-	bool Input::GetMousePress(unsigned int _button)
-	{
-		return false;
-	}
-
-	bool Input::GetMouseRepeat(unsigned int _button)
+	bool Input::OnMousePress(unsigned int _button)
 	{
 		return false;
 	}
 
-	bool Input::GetMouseRelease(unsigned int _button)
+	bool Input::OnMouseRelease(unsigned int _button)
 	{
 		return false;
 	}
