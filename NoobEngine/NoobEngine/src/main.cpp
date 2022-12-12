@@ -6,35 +6,10 @@
 #include "Events/Event.h"
 #include "Events/Input.h"
 
-#define GLFW_INCLUDE_NONE
 using namespace NoobEngine;
 
-void foo()
-{
-	LOG_TRACE("This is foo lmao");
-}
-
-void foo2()
-{
-	LOG_TRACE("futapog");
-}
-
-void ccc()
-{
-	LOG_TRACE("This is ccc lmao");
-}
-
-void ccc2()
-{
-	LOG_TRACE("ccaw");
-}
-
-
 int main() {
-	//MY_ASSERT_DEBUG(1 == 0);// , "Failed to execute function");
-	GLFWwindow* window = Window::CreateWindow(WindowProps());
-	MY_ASSERT(window);
-	LOG_INFO((const char*)glGetString(GL_VERSION));
+	MY_ASSERT(Window::CreateWindow(WindowProps()));
 
 	Graphics::BatchRenderer2D renderer;
 	Graphics::ShaderProgram shader("../../assets/Shaders/vertex.shader", "../../assets/Shaders/fragment.shader");
@@ -42,9 +17,8 @@ int main() {
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	while (!Window::WindowShouldClose(window)) {
+	while (!Window::WindowShouldClose()) {
 		// Input
-		Window::ProcessInput(window);
 
 		// Rendering
 		Window::Clear();
@@ -60,8 +34,9 @@ int main() {
 		renderer.Flush();
 
 		shader.Unbind();
-		Window::SwapBuffers(window);
+		Window::SwapBuffers();
 	}
 
+	Window::TerminateWindow();
 	return 0;
 }

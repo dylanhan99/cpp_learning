@@ -19,23 +19,19 @@ namespace NoobEngine
 	class Window
 	{
 	private:
-		static const char* title;
-		static uint32_t width, height;
+		//static const char* title;
+		//static uint32_t width, height;
+		static GLFWwindow* m_Window;
 
 	public:
-		Window();
-		~Window();
-
-
-		static GLFWwindow* CreateWindow(WindowProps _props);
+		static bool CreateWindow(WindowProps _props);
 		static void SetViewPort(uint32_t _width, uint32_t _height);
-		static int  WindowShouldClose(GLFWwindow* _window);
-		static void WindowShouldClose(GLFWwindow* _window, bool _tf);
+		static int  WindowShouldClose();
+		static void WindowShouldClose(bool _tf);
 		static void TerminateWindow();
 
 		static void Clear();
-		static void ProcessInput(GLFWwindow* _window);
-		static void SwapBuffers(GLFWwindow* _window);
+		static void SwapBuffers();
 
 		static void framebuffer_size_callback(GLFWwindow* _window, int _width, int _height);
 	};

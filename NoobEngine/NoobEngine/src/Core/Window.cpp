@@ -2,51 +2,51 @@
 #include "Window.h"
 #include "Events/Input.h"
 
+#define GLFW_INCLUDE_NONE
+
 namespace NoobEngine
 {
-	Window::Window()
-	{
+	GLFWwindow* Window::m_Window = NULL;
 
-	}
-
-	Window::~Window() 
-	{
-		TerminateWindow();
-	}
-
-	GLFWwindow* Window::CreateWindow(WindowProps _props)
+	bool Window::CreateWindow(WindowProps _props)
 	{
 		// Init stuff
 		if (!glfwInit()) {
-			std::cout << "GLFW init fail\n";
+			LOG_FATAL("Failed to initialize GLFW");
 			TerminateWindow();
+			return false;
 		}
+		LOG_INFO("GLFW initialized");
 
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-		GLFWwindow* window = glfwCreateWindow(_props.width, _props.height, _props.title, NULL, NULL);
-		if (!window) {
-			std::cout << "Failed to create GLFW window!\n";
+		m_Window = glfwCreateWindow(_props.width, _props.height, _props.title, NULL, NULL);
+		if (!m_Window) {
+			LOG_FATAL("Failed to create GLFW window");
 			TerminateWindow();
-			return nullptr;
+			return false;
 		}
-		glfwMakeContextCurrent(window);
+		glfwMakeContextCurrent(m_Window);
+		LOG_INFO("GLFWwindow created");
 
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-			std::cout << "Failed to initialize GLAD" << std::endl;
-			return nullptr;
+			LOG_FATAL("Failed to initialize GLAD");
+			TerminateWindow();
+			return false;
 		}
+		LOG_INFO("GLAD initialized");
+		LOG_INFO("GL_VERSION %s", (const char*)glGetString(GL_VERSION));
 
 		SetViewPort(800, 600);
 		// Setup callbacks
-		glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-		glfwSetKeyCallback(window, Events::Input::Keyboard);
-		glfwSetMouseButtonCallback(window, Events::Input::Mouse);
-		glfwSetCursorPosCallback(window, Events::Input::Cursor);
+		glfwSetFramebufferSizeCallback(m_Window, framebuffer_size_callback);
+		glfwSetKeyCallback(m_Window, Events::Input::Keyboard);
+		glfwSetMouseButtonCallback(m_Window, Events::Input::Mouse);
+		glfwSetCursorPosCallback(m_Window, Events::Input::Cursor);
 
-		return window;
+		return true;
 	}
 
 	void Window::SetViewPort(uint32_t _width, uint32_t _height)
@@ -54,14 +54,14 @@ namespace NoobEngine
 		glViewport(0, 0, _width, _height);
 	}
 
-	int Window::WindowShouldClose(GLFWwindow* _window) 
+	int Window::WindowShouldClose() 
 	{
-		return glfwWindowShouldClose(_window);
+		return glfwWindowShouldClose(m_Window);
 	}
 
-	void Window::WindowShouldClose(GLFWwindow* _window, bool _tf)
+	void Window::WindowShouldClose(bool _tf)
 	{
-		glfwSetWindowShouldClose(_window, _tf);
+		glfwSetWindowShouldClose(m_Window, _tf);
 	}
 
 	void Window::TerminateWindow()
@@ -75,14 +75,9 @@ namespace NoobEngine
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
-	void Window::ProcessInput(GLFWwindow* _window)
+	void Window::SwapBuffers()
 	{
-	
-	}
-
-	void Window::SwapBuffers(GLFWwindow* _window)
-	{
-		glfwSwapBuffers(_window);
+		glfwSwapBuffers(m_Window);
 		glfwPollEvents();
 	}
 
