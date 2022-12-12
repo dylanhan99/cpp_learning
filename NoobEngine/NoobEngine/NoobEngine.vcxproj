@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\Application.cpp" />
     <ClCompile Include="src\Events\Event.cpp" />
     <ClCompile Include="src\Events\Input.cpp" />
     <ClCompile Include="src\nepch.cpp">
@@ -46,6 +47,7 @@
     <ClCompile Include="src\Utilities\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\Application.h" />
     <ClInclude Include="src\Events\Event.h" />
     <ClInclude Include="src\Events\Input.h" />
     <ClInclude Include="src\nepch.h" />
