@@ -9,36 +9,36 @@
 
 #pragma once
 #include "Buffer.h"
+#include "Constants.h"
 
 namespace NoobEngine { namespace Graphics {
 
-	struct Vertex 
-	{
-		glm::vec4 Position;
-	};
-
-	constexpr std::size_t RENDERER_MAX_SPRITES = 42500;
-	constexpr std::size_t RENDERER_VERTEX_SIZE = sizeof(Vertex);
-	constexpr std::size_t RENDERER_SPRITE_SIZE = RENDERER_VERTEX_SIZE * 4;
-	constexpr std::size_t RENDERER_BUFFER_SIZE = RENDERER_SPRITE_SIZE * RENDERER_MAX_SPRITES;
-	constexpr std::size_t RENDERER_INDICES_SIZE = RENDERER_MAX_SPRITES * 6;
-
 	class BatchRenderer2D
 	{
-	private:
-		VertexArray		m_VAO;
-		VertexBuffer	m_VBO;
-		IndexBuffer *m_IBO;
-		GLsizei			m_IndexCount;
-		Vertex			*m_Buffer;
 	public:
-		BatchRenderer2D();
-		~BatchRenderer2D();
+		//BatchRenderer2D();
+		//~BatchRenderer2D();
 
-		void Begin();
-		void Submit(glm::vec4 _pos);
-		void End();
-		void Flush();
+		static void Init();
+		static void Begin();
+		static void End();
+		static void Flush();
+		static void Terminate();
+		//void Submit(Vertex& _vertex); depractaed
+
+		static void QuadInit();
+		static void QuadBegin();
+		static void QuadEnd();
+		static void QuadFlush();
+		static void QuadTerminate();
+		static void SubmitQuad(QuadVertex& _vertex);
+
+		static void LineInit();
+		static void LineBegin();
+		static void LineSubmit() {};
+		static void LineEnd();
+		static void LineFlush();
+		static void LineTerminate();
 	};
 
 }}

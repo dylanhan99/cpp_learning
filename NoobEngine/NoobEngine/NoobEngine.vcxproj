@@ -47,6 +47,7 @@
     <ClCompile Include="src\Utilities\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Constants.h" />
     <ClInclude Include="src\Core\Application.h" />
     <ClInclude Include="src\Events\Event.h" />
     <ClInclude Include="src\Events\Input.h" />
