@@ -10,7 +10,7 @@ namespace NoobEngine { namespace Core {
 using namespace Graphics;
 
 	Application::Application()
-		: /*m_Renderer(nullptr), */m_Shaders(nullptr)
+		: m_Shaders(nullptr)
 	{
 
 	}
@@ -47,8 +47,10 @@ using namespace Graphics;
 
 			BatchRenderer2D::Begin();
 
-			QuadVertex v = { glm::vec4(1.f, 0.5f, 0.0f, 1.f), glm::vec4(50.f, 50.f, 50.f, 255.f) };
+			QuadVertex v = { glm::vec4(0.f, 0.f, 0.0f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.0f) };
 			BatchRenderer2D::SubmitQuad(v);
+			QuadVertex v2 = { glm::vec4(1.f, 0.5f, 0.0f, 1.f), glm::vec4(1.f, 0.5f, 0.0f, 1.f) };
+			BatchRenderer2D::SubmitQuad(v2);
 
 			BatchRenderer2D::End();
 			BatchRenderer2D::Flush();
@@ -62,7 +64,6 @@ using namespace Graphics;
 	{
 		delete m_Shaders;
 		BatchRenderer2D::Terminate();
-		//delete m_Renderer;
 		Window::TerminateWindow();
 		LOG_INFO("Application terminated safely.");
 	}
