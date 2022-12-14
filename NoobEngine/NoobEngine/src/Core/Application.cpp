@@ -51,9 +51,9 @@ using namespace Graphics;
 			BatchRenderer2D::SubmitQuad(v);
 			QuadVertex v2 = { glm::vec4(1.f, 0.5f, 0.0f, 1.f), glm::vec4(1.f, 0.5f, 0.0f, 1.f) };
 			BatchRenderer2D::SubmitQuad(v2);
-			//LineVertex l = { glm::vec4(-0.5f, -0.5f, 0.0f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.0f) };
-			//LineVertex l2 = { glm::vec4(0.f, 0.f, 0.0f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.0f) };
-			//BatchRenderer2D::SubmitLine(l, l2);
+			LineVertex l = { glm::vec4(-0.5f, -0.5f, 0.0f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.0f) };
+			LineVertex l2 = { glm::vec4(0.f, 0.f, 0.0f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.0f) };
+			BatchRenderer2D::SubmitLine(l, l2);
 
 			BatchRenderer2D::End();
 			BatchRenderer2D::Flush();
