@@ -111,7 +111,7 @@ namespace NoobEngine { namespace Graphics {
 			m_QuadBatch->IBO->Bind();
 			uint32_t dataSize = (uint32_t)((uint8_t*)m_QuadBatch->BufferPointer - (uint8_t*)m_QuadBatch->BufferBase);
 			m_QuadBatch->VBO->SetData(m_QuadBatch->BufferBase, dataSize);
-			//glDrawElements(GL_TRIANGLES, m_QuadBatch->Index, GL_UNSIGNED_INT, NULL);
+			glDrawElements(GL_TRIANGLES, m_QuadBatch->Index, GL_UNSIGNED_INT, NULL);
 			m_QuadBatch->IBO->Unbind();
 			m_QuadBatch->VAO->Unbind();
 		}
