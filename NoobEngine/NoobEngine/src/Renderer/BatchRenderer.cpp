@@ -16,22 +16,25 @@ namespace NoobEngine { namespace Graphics {
 
 	struct QuadBatch
 	{
-		VertexArray*	VAO = nullptr;
-		VertexBuffer*	VBO = nullptr;
-		IndexBuffer*	IBO = nullptr;
+		VertexArray		*VAO = nullptr;
+		VertexBuffer	*VBO = nullptr;
+		IndexBuffer		*IBO = nullptr;
 		GLsizei			Index = 0;
-		QuadVertex*		Buffer = nullptr;
+		QuadVertex		*BufferBase = nullptr;
+		QuadVertex		*BufferPointer = nullptr;
 	};
 
 	struct LineBatch
 	{
-		VertexArray		VAO;
-		VertexBuffer	VBO;
-		LineVertex*		Buffer = nullptr;
+		VertexArray		*VAO = nullptr;
+		VertexBuffer	*VBO = nullptr;
+		GLsizei			VertexCount = 0;
+		LineVertex		*BufferBase = nullptr;
+		LineVertex		*BufferPointer = nullptr;
 	};
 
-	static struct QuadBatch* m_QuadBatch = nullptr;
-	static struct LineBatch* m_LineBatch = nullptr;
+	static struct QuadBatch *m_QuadBatch = nullptr;
+	static struct LineBatch *m_LineBatch = nullptr;
 
 	void BatchRenderer2D::Init()
 	{
@@ -74,6 +77,8 @@ namespace NoobEngine { namespace Graphics {
 		layout.Push<glm::vec4>(1);
 		m_QuadBatch->VAO->AddBuffer(*m_QuadBatch->VBO, layout);
 
+		m_QuadBatch->BufferBase = new QuadVertex[RENDERER_QUAD_SPRITE_SIZE];
+
 		unsigned int* indices = (unsigned int*)malloc(RENDERER_QUAD_INDICES_SIZE * sizeof(unsigned int));
 		if (!indices) {
 			QuadTerminate();
@@ -100,12 +105,14 @@ namespace NoobEngine { namespace Graphics {
 	void BatchRenderer2D::QuadBegin()
 	{
 		m_QuadBatch->VBO->Bind();
-		m_QuadBatch->Buffer = (QuadVertex*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+		m_QuadBatch->Index = 0;
+		m_QuadBatch->BufferPointer = m_QuadBatch->BufferBase;
+		//m_QuadBatch->Buffer = (QuadVertex*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 	}
 
 	void BatchRenderer2D::QuadEnd()
 	{
-		glUnmapBuffer(GL_ARRAY_BUFFER);
+		//glUnmapBuffer(GL_ARRAY_BUFFER);
 		m_QuadBatch->VBO->Unbind();
 	}
 
@@ -113,10 +120,11 @@ namespace NoobEngine { namespace Graphics {
 	{
 		m_QuadBatch->VAO->Bind();
 		m_QuadBatch->IBO->Bind();
+		uint32_t dataSize = (uint32_t)((uint8_t*)m_QuadBatch->BufferPointer - (uint8_t*)m_QuadBatch->BufferBase);
+		m_QuadBatch->VBO->SetData(m_QuadBatch->BufferBase, dataSize);
 		glDrawElements(GL_TRIANGLES, m_QuadBatch->Index, GL_UNSIGNED_INT, NULL);
 		m_QuadBatch->IBO->Unbind();
 		m_QuadBatch->VAO->Unbind();
-		m_QuadBatch->Index = 0;
 	}
 
 	void BatchRenderer2D::QuadTerminate()
@@ -124,6 +132,7 @@ namespace NoobEngine { namespace Graphics {
 		delete m_QuadBatch->VAO;
 		delete m_QuadBatch->VBO;
 		delete m_QuadBatch->IBO;
+		delete[] m_QuadBatch->BufferBase;
 		delete m_QuadBatch;
 	}	
 
@@ -133,21 +142,21 @@ namespace NoobEngine { namespace Graphics {
 		auto position = _vertex.Position;
 		auto color = _vertex.Color;
 
-		m_QuadBatch->Buffer->Position = position;
-		m_QuadBatch->Buffer->Color = color;
-		++(m_QuadBatch->Buffer);
+		m_QuadBatch->BufferPointer->Position = position;
+		m_QuadBatch->BufferPointer->Color = color;
+		++m_QuadBatch->BufferPointer;
 
-		m_QuadBatch->Buffer->Position = glm::vec4(position.x,		 position.y - size, position.z, 1);
-		m_QuadBatch->Buffer->Color = color;
-		++(m_QuadBatch->Buffer);
+		m_QuadBatch->BufferPointer->Position = glm::vec4(position.x,		 position.y - size, position.z, 1);
+		m_QuadBatch->BufferPointer->Color = color;
+		++m_QuadBatch->BufferPointer;
 
-		m_QuadBatch->Buffer->Position = glm::vec4(position.x - size, position.y - size, position.z, 1);
-		m_QuadBatch->Buffer->Color = color;
-		++(m_QuadBatch->Buffer);
+		m_QuadBatch->BufferPointer->Position = glm::vec4(position.x - size, position.y - size, position.z, 1);
+		m_QuadBatch->BufferPointer->Color = color;
+		++m_QuadBatch->BufferPointer;
 
-		m_QuadBatch->Buffer->Position = glm::vec4(position.x - size, position.y,		position.z, 1);
-		m_QuadBatch->Buffer->Color = color;
-		++(m_QuadBatch->Buffer);
+		m_QuadBatch->BufferPointer->Position = glm::vec4(position.x - size, position.y,		position.z, 1);
+		m_QuadBatch->BufferPointer->Color = color;
+		++m_QuadBatch->BufferPointer;
 
 		m_QuadBatch->Index += 6;
 	}
@@ -155,55 +164,53 @@ namespace NoobEngine { namespace Graphics {
 
 	void BatchRenderer2D::LineInit()
 	{
-
+		//m_LineBatch = new struct LineBatch();
+		//m_LineBatch->VAO = new VertexArray();
+		//m_LineBatch->VBO = new VertexBuffer(RENDERER_LINE_BUFFER_SIZE);
+		//
+		//Graphics::BufferLayout layout;
+		//layout.Push<glm::vec4>(1);
+		//layout.Push<glm::vec4>(1);
+		//m_LineBatch->VAO->AddBuffer(*m_LineBatch->VBO, layout);
 	}
 	
 	void BatchRenderer2D::LineBegin()
 	{
-
+		//m_LineBatch->VBO->Bind();
+		//m_LineBatch->Buffer = (LineVertex*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 	}
 
 	void BatchRenderer2D::LineEnd()
 	{
-
+		//glUnmapBuffer(GL_ARRAY_BUFFER);
+		//m_LineBatch->VBO->Unbind();
 	}
 
 	void BatchRenderer2D::LineFlush()
 	{
-
+		//m_LineBatch->VAO->Bind();
+		//glDrawArrays(GL_LINE, 0, m_LineBatch->VertexCount);
+		//m_LineBatch->VAO->Unbind();
 	}
 
 	void BatchRenderer2D::LineTerminate()
 	{
-		//delete[] m_LineBatch->Buffer;
+		//delete m_LineBatch->VAO;
+		//delete m_LineBatch->VBO;
 		//delete m_LineBatch;
 	}
 
-	//void BatchRenderer2D::Submit(Vertex& _vertex)
-	//{
-	//	static unsigned int m_BufferCount = 0;
-	//	float size = 1.f;
-	//	auto position = _vertex.Position;
-	//	auto color = _vertex.Color;
-	//	
-	//	m_Buffer->Position = position;
-	//	m_Buffer->Color = color;
-	//	++m_Buffer;
-	//
-	//	m_Buffer->Position = glm::vec4(position.x, position.y - size, position.z, 1);
-	//	m_Buffer->Color = color;
-	//	++m_Buffer;
-	//	
-	//	m_Buffer->Position = glm::vec4(position.x - size, position.y - size, position.z, 1);
-	//	m_Buffer->Color = color;
-	//	++m_Buffer;
-	//	
-	//	m_Buffer->Position = glm::vec4(position.x - size, position.y, position.z, 1);
-	//	m_Buffer->Color = color;
-	//	++m_Buffer;
-	//
-	//	if (m_BufferCount % 4 == 0)
-	//		m_IndexCount += 6;
-	//}
+	void BatchRenderer2D::SubmitLine(LineVertex& _vertex1, LineVertex& _vertex2)
+	{
+		//m_LineBatch->Buffer->Position = _vertex1.Position;
+		//m_LineBatch->Buffer->Color = _vertex1.Color;
+		//++m_LineBatch->Buffer;
+		//
+		//m_LineBatch->Buffer->Position = _vertex2.Position;
+		//m_LineBatch->Buffer->Color = _vertex2.Color;
+		//++m_LineBatch->Buffer;
+		//
+		//m_LineBatch->VertexCount += 2;
+	}
 
 }}

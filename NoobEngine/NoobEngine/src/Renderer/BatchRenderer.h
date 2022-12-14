@@ -39,6 +39,7 @@ namespace NoobEngine { namespace Graphics {
 		static void LineEnd();
 		static void LineFlush();
 		static void LineTerminate();
+		static void SubmitLine(LineVertex& _vertex1, LineVertex& _vertex2);
 	};
 
 }}

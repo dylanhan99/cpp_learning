@@ -76,7 +76,6 @@ namespace NoobEngine { namespace Graphics {
 	{
 		glGenBuffers(1, &m_RendererID);
 		Bind();
-		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 		glBufferData(GL_ARRAY_BUFFER, _size, NULL, GL_DYNAMIC_DRAW);
 		Unbind();
 	}
@@ -85,7 +84,6 @@ namespace NoobEngine { namespace Graphics {
 	{
 		glGenBuffers(1, &m_RendererID);
 		Bind();
-		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 		glBufferData(GL_ARRAY_BUFFER, _size, _data, GL_STATIC_DRAW);
 		Unbind();
 	}
@@ -94,6 +92,13 @@ namespace NoobEngine { namespace Graphics {
 	{
 		Unbind();
 		glDeleteBuffers(1, &m_RendererID);
+	}
+
+	void VertexBuffer::SetData(const void* _data, std::size_t _size)
+	{
+		Bind();
+		glBufferSubData(GL_ARRAY_BUFFER, 0, _size, _data);
+		Unbind();
 	}
 
 	void VertexBuffer::Bind() const

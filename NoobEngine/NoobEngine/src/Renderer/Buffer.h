@@ -83,6 +83,7 @@ public:
 	VertexBuffer(unsigned int _size, const float* _data);
 	~VertexBuffer();
 
+	void SetData(const void* _data, std::size_t _size);
 	void Bind() const;
 	void Unbind() const;
 };
