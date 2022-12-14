@@ -1,5 +1,6 @@
 #include "nepch.h"
 #include "BatchRenderer.h"
+#include "Shaders/Shader.h"
 
 namespace NoobEngine { namespace Graphics {
 
@@ -24,6 +25,7 @@ namespace NoobEngine { namespace Graphics {
 		GLsizei			Index = 0;
 		QuadVertex		*BufferBase = nullptr;
 		QuadVertex		*BufferPointer = nullptr;
+		ShaderProgram	*Shaders = nullptr;
 	};
 
 	struct LineBatch
@@ -33,6 +35,7 @@ namespace NoobEngine { namespace Graphics {
 		GLsizei			VertexCount = 0;
 		LineVertex		*BufferBase = nullptr;
 		LineVertex		*BufferPointer = nullptr;
+		ShaderProgram	*Shaders = nullptr;
 	};
 
 	static struct QuadBatch *m_QuadBatch = nullptr;
@@ -74,6 +77,9 @@ namespace NoobEngine { namespace Graphics {
 		m_QuadBatch->IBO = new IndexBuffer(indices, RENDERER_QUAD_INDICES_SIZE);
 		free(indices);
 
+		m_QuadBatch->Shaders = new Graphics::ShaderProgram("../../assets/Shaders/QuadVertex.shader", "../../assets/Shaders/QuadFragment.shader");
+
+
 		m_LineBatch = new struct LineBatch();
 		m_LineBatch->VAO = new VertexArray();
 		m_LineBatch->VBO = new VertexBuffer(RENDERER_LINE_BUFFER_SIZE_BYTES);
@@ -84,6 +90,7 @@ namespace NoobEngine { namespace Graphics {
 		m_LineBatch->VAO->AddBuffer(*m_LineBatch->VBO, layout);
 
 		m_LineBatch->BufferBase = new LineVertex[RENDERER_LINE_VERTEX_BUFFER_LEN];
+		m_LineBatch->Shaders = new Graphics::ShaderProgram("../../assets/Shaders/LineVertex.shader", "../../assets/Shaders/LineFragment.shader");
 	}
 
 	void BatchRenderer2D::Begin()
@@ -107,6 +114,7 @@ namespace NoobEngine { namespace Graphics {
 	void BatchRenderer2D::Flush()
 	{
 		if (m_QuadBatch->Index) {
+			m_QuadBatch->Shaders->Bind();
 			m_QuadBatch->VAO->Bind();
 			m_QuadBatch->IBO->Bind();
 			uint32_t dataSize = (uint32_t)((uint8_t*)m_QuadBatch->BufferPointer - (uint8_t*)m_QuadBatch->BufferBase);
@@ -114,15 +122,18 @@ namespace NoobEngine { namespace Graphics {
 			glDrawElements(GL_TRIANGLES, m_QuadBatch->Index, GL_UNSIGNED_INT, NULL);
 			m_QuadBatch->IBO->Unbind();
 			m_QuadBatch->VAO->Unbind();
+			m_QuadBatch->Shaders->Unbind();
 		}
 
 		if (m_LineBatch->VertexCount) {
+			m_LineBatch->Shaders->Bind();
 			m_LineBatch->VAO->Bind();
 			uint32_t dataSize = (uint32_t)((uint8_t*)m_LineBatch->BufferPointer - (uint8_t*)m_LineBatch->BufferBase);
 			m_LineBatch->VBO->SetData(m_LineBatch->BufferBase, dataSize);
 			glLineWidth(2.f);
 			glDrawArrays(GL_LINES, 0, m_LineBatch->VertexCount);
 			m_LineBatch->VAO->Unbind();
+			m_LineBatch->Shaders->Unbind();
 		}
 	}
 
@@ -133,6 +144,7 @@ namespace NoobEngine { namespace Graphics {
 			delete m_QuadBatch->VBO;
 			delete m_QuadBatch->IBO;
 			delete[] m_QuadBatch->BufferBase;
+			delete m_QuadBatch->Shaders;
 			delete m_QuadBatch;
 		}
 
@@ -140,6 +152,7 @@ namespace NoobEngine { namespace Graphics {
 			delete m_LineBatch->VAO;
 			delete m_LineBatch->VBO;
 			delete[] m_LineBatch->BufferBase;
+			delete m_LineBatch->Shaders;
 			delete m_LineBatch;
 		}
 	}

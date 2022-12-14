@@ -10,7 +10,6 @@ namespace NoobEngine { namespace Core {
 using namespace Graphics;
 
 	Application::Application()
-		: m_Shaders(nullptr)
 	{
 
 	}
@@ -25,7 +24,6 @@ using namespace Graphics;
 		MY_ASSERT(Window::CreateWindow(WindowProps()));
 		//m_Renderer = new Graphics::BatchRenderer2D();
 		BatchRenderer2D::Init();
-		m_Shaders = new Graphics::ShaderProgram("../../assets/Shaders/vertex.shader", "../../assets/Shaders/fragment.shader");
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		LOG_INFO("Application initialized.");
@@ -43,7 +41,6 @@ using namespace Graphics;
 
 			// use shader program to render item
 			//glUniform4f(glGetUniformLocation(shaderProgram, "ml_matrix"), vector.x, vector.y, vector.z, vector.w);
-			m_Shaders->Bind();
 
 			BatchRenderer2D::Begin();
 
@@ -58,14 +55,12 @@ using namespace Graphics;
 			BatchRenderer2D::End();
 			BatchRenderer2D::Flush();
 
-			m_Shaders->Unbind();
 			Window::SwapBuffers();
 		}
 	}
 
 	void Application::Terminate()
 	{
-		delete m_Shaders;
 		BatchRenderer2D::Terminate();
 		Window::TerminateWindow();
 		LOG_INFO("Application terminated safely.");

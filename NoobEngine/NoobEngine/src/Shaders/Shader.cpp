@@ -17,6 +17,7 @@ namespace NoobEngine { namespace Graphics {
 
 	ShaderProgram::~ShaderProgram()
 	{
+		Unbind();
 		glDeleteShader(m_VertexID);
 		glDeleteShader(m_FragmentID);
 		glDeleteProgram(m_ProgramID);
