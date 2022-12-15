@@ -63,6 +63,13 @@ public:
 	}
 
 	template<>
+	void Push<glm::vec2>(unsigned int _count)
+	{
+		m_Elements.push_back({ GL_FLOAT, (unsigned int)glm::vec2::length(), GL_TRUE });
+		m_Stride += _count * sizeof(glm::vec2);
+	}
+
+	template<>
 	void Push<glm::vec4>(unsigned int _count)
 	{
 		m_Elements.push_back({ GL_FLOAT, (unsigned int)glm::vec4::length(), GL_TRUE });

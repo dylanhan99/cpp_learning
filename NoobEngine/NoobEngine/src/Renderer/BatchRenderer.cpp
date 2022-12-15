@@ -2,6 +2,8 @@
 #include "BatchRenderer.h"
 #include "Shaders/Shader.h"
 
+#include "Texture.h"
+
 namespace NoobEngine { namespace Graphics {
 
 	constexpr std::size_t RENDERER_QUAD_MAX_SPRITES			= 42500;
@@ -51,6 +53,7 @@ namespace NoobEngine { namespace Graphics {
 		Graphics::BufferLayout layout;
 		layout.Push<glm::vec4>(1);
 		layout.Push<glm::vec4>(1);
+		layout.Push<glm::vec2>(1);
 		m_QuadBatch->VAO->AddBuffer(*m_QuadBatch->VBO, layout);
 
 		m_QuadBatch->BufferBase = new QuadVertex[RENDERER_QUAD_VERTEX_BUFFER_LEN];
@@ -113,6 +116,16 @@ namespace NoobEngine { namespace Graphics {
 
 	void BatchRenderer2D::Flush()
 	{
+		auto texture = TextureCache::GetTexture2D("../../assets/idk.jpg");
+		int texid = 0;
+		glActiveTexture(GL_TEXTURE0);
+		if (texture) texture->Bind(0);
+		auto loc = glGetUniformLocation(m_QuadBatch->Shaders->GetID(), "uTextures");
+		int samplers[1] = {0};
+		glGetUniformiv(loc, 1, samplers);
+		//glBindTexture(GL_TEXTURE_2D, m_TextureSlots[i]);
+		//glBindTextureUnit(0, texture.);
+
 		if (m_QuadBatch->Index) {
 			m_QuadBatch->Shaders->Bind();
 			m_QuadBatch->VAO->Bind();
@@ -139,6 +152,7 @@ namespace NoobEngine { namespace Graphics {
 
 	void BatchRenderer2D::Terminate()
 	{
+		TextureCache::Terminate();
 		if (m_QuadBatch) {
 			delete m_QuadBatch->VAO;
 			delete m_QuadBatch->VBO;
@@ -170,18 +184,22 @@ namespace NoobEngine { namespace Graphics {
 
 		m_QuadBatch->BufferPointer->Position = position;
 		m_QuadBatch->BufferPointer->Color = color;
+		m_QuadBatch->BufferPointer->TexCoord = { 0.0f, 1.0f };
 		++m_QuadBatch->BufferPointer;
 
 		m_QuadBatch->BufferPointer->Position = glm::vec4(position.x,		 position.y - size, position.z, 1);
 		m_QuadBatch->BufferPointer->Color = color;
+		m_QuadBatch->BufferPointer->TexCoord = { 1.0f, 1.0f };
 		++m_QuadBatch->BufferPointer;
 
 		m_QuadBatch->BufferPointer->Position = glm::vec4(position.x - size, position.y - size, position.z, 1);
 		m_QuadBatch->BufferPointer->Color = color;
+		m_QuadBatch->BufferPointer->TexCoord = { 1.0f, 0.0f };
 		++m_QuadBatch->BufferPointer;
 
 		m_QuadBatch->BufferPointer->Position = glm::vec4(position.x - size, position.y,		position.z, 1);
 		m_QuadBatch->BufferPointer->Color = color;
+		m_QuadBatch->BufferPointer->TexCoord = { 0.0f, 0.0f };
 		++m_QuadBatch->BufferPointer;
 
 		m_QuadBatch->Index += 6;

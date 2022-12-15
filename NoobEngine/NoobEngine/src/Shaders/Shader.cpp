@@ -9,8 +9,10 @@ namespace NoobEngine { namespace Graphics {
 		m_VertexID = CreateShader(GL_VERTEX_SHADER, _vertexPath);
 		m_FragmentID = CreateShader(GL_FRAGMENT_SHADER, _fragmentPath);
 
-		CompileShader(m_VertexID);
-		CompileShader(m_FragmentID);
+		if (!CompileShader(m_VertexID))
+			LOG_ERROR("Failed to compile shader '%s'.", _vertexPath);
+		if (!CompileShader(m_FragmentID))
+			LOG_ERROR("Failed to compile shader '%s'.", _fragmentPath);
 
 		Link();
 	}
@@ -55,20 +57,22 @@ namespace NoobEngine { namespace Graphics {
 			LOG_ERROR("Failed to create '%d' shader using '%s'.", _shaderType, _shaderPath);
 			return -1;
 		}
-		LOG_TRACE(src);
+		LOG_TRACE("%s\n%s", _shaderPath, src);
 		glShaderSource(id, 1, &src, NULL); // create read file stuff
 		return id;
 	}
 	
-	void ShaderProgram::CompileShader(unsigned int _shaderID)
+	bool ShaderProgram::CompileShader(unsigned int _shaderID)
 	{
 		glCompileShader(_shaderID);
 		int success; char infoLog[512];
 		glGetShaderiv(_shaderID, GL_COMPILE_STATUS, &success);
 		if (!success) {
 			glGetShaderInfoLog(_shaderID, sizeof(infoLog), NULL, infoLog);
-			LOG_ERROR("Failed to compile shader '%d'.", _shaderID);
+			//LOG_ERROR("Failed to compile shader '%d'.", _shaderID);
+			return false;
 		}
+		return true;
 	}
 
 }}

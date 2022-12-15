@@ -18,8 +18,8 @@ namespace NoobEngine
 		}
 		LOG_INFO("GLFW initialized");
 
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 		m_Window = glfwCreateWindow(_props.width, _props.height, _props.title, NULL, NULL);
@@ -38,7 +38,10 @@ namespace NoobEngine
 		}
 		LOG_INFO("GLAD initialized");
 		LOG_INFO("GL_VERSION %s", (const char*)glGetString(GL_VERSION));
-
+		LOG_INFO("GLSL_VERSION %s", (const char*)glGetString(GL_SHADING_LANGUAGE_VERSION));
+		LOG_INFO("VENDOR %s", (const char*)glGetString(GL_VENDOR));
+		LOG_INFO("GPU %s", (const char*)glGetString(GL_RENDERER));
+		LOG_INFO("Ext %s", (const char*)glGetString(GL_EXTENSIONS));
 		SetViewPort(800, 600);
 		// Setup callbacks
 		glfwSetFramebufferSizeCallback(m_Window, framebuffer_size_callback);

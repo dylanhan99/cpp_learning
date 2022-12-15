@@ -15,10 +15,11 @@ namespace NoobEngine { namespace Graphics {
 
 		void Bind();
 		void Unbind();
+		inline const unsigned int GetID() const { return m_ProgramID; }
 	private:
 		void Link();
 		static unsigned int CreateShader(unsigned int _shaderType, const char* _shaderPath);
-		static void CompileShader(unsigned int _shaderID);
+		static bool CompileShader(unsigned int _shaderID);
 	};
 
 }}
