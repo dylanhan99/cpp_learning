@@ -1,4 +1,4 @@
-#version 330 core
+#version 460 core
 
 out vec4 o_Col;
 in vec4 v_Col;
