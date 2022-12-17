@@ -178,49 +178,8 @@ namespace NoobEngine { namespace Graphics {
 		}
 	}
 
-	void BatchRenderer2D::DrawQuad(QuadVertex& _vertex)
+	void BatchRenderer2D::DrawQuad(glm::vec2 _pos, glm::vec2 _size, float _rotation, glm::vec4 _color, const char* _path)
 	{
-		float size = 1.f;
-		auto position = _vertex.Position;
-		auto color = _vertex.Color;
-		float texSlot = 1.f;
-
-		if (m_QuadBatch->Index >= RENDERER_QUAD_INDICES_SIZE) {
-			Flush();
-			Begin();
-		}
-
-		m_QuadBatch->BufferPointer->Position = position;
-		m_QuadBatch->BufferPointer->Color = color;
-		m_QuadBatch->BufferPointer->TexSlot = texSlot;
-		m_QuadBatch->BufferPointer->TexCoord = { 0.0f, 1.0f };
-		++m_QuadBatch->BufferPointer;
-
-		m_QuadBatch->BufferPointer->Position = glm::vec4(position.x,		 position.y - size, position.z, 1);
-		m_QuadBatch->BufferPointer->Color = color;
-		m_QuadBatch->BufferPointer->TexSlot = texSlot;
-		m_QuadBatch->BufferPointer->TexCoord = { 1.0f, 1.0f };
-		++m_QuadBatch->BufferPointer;
-
-		m_QuadBatch->BufferPointer->Position = glm::vec4(position.x - size, position.y - size, position.z, 1);
-		m_QuadBatch->BufferPointer->Color = color;
-		m_QuadBatch->BufferPointer->TexSlot = texSlot;
-		m_QuadBatch->BufferPointer->TexCoord = { 1.0f, 0.0f };
-		++m_QuadBatch->BufferPointer;
-
-		m_QuadBatch->BufferPointer->Position = glm::vec4(position.x - size, position.y,		position.z, 1);
-		m_QuadBatch->BufferPointer->Color = color;
-		m_QuadBatch->BufferPointer->TexSlot = texSlot;
-		m_QuadBatch->BufferPointer->TexCoord = { 0.0f, 0.0f };
-		++m_QuadBatch->BufferPointer;
-
-		m_QuadBatch->Index += 6;
-	}
-
-	void BatchRenderer2D::DrawQuad(glm::vec2 _pos, glm::vec2 _size, const char* _path)
-	{
-		// ../../assets/idk.jpg
-		auto color = m_QuadBatch->DefaultColor;
 		auto texture = TextureCache::GetTexture2D(_path);
 		float texSlot = m_QuadBatch->DefaultTexSlot;
 		if (texture) {
@@ -232,30 +191,50 @@ namespace NoobEngine { namespace Graphics {
 			NextBatch();
 
 		m_QuadBatch->BufferPointer->Position = glm::vec4(_pos.x, _pos.y, 0.f, 1.f);
-		m_QuadBatch->BufferPointer->Color = color;
+		m_QuadBatch->BufferPointer->Color = _color;
 		m_QuadBatch->BufferPointer->TexSlot = texSlot;
 		m_QuadBatch->BufferPointer->TexCoord = m_QuadBatch->DefaultTexCoord[0];
 		++m_QuadBatch->BufferPointer;
 
 		m_QuadBatch->BufferPointer->Position = glm::vec4(_pos.x, _pos.y - _size.y, 0.f, 1.f);
-		m_QuadBatch->BufferPointer->Color = color;
+		m_QuadBatch->BufferPointer->Color = _color;
 		m_QuadBatch->BufferPointer->TexSlot = texSlot;
 		m_QuadBatch->BufferPointer->TexCoord = m_QuadBatch->DefaultTexCoord[1];
 		++m_QuadBatch->BufferPointer;
 
 		m_QuadBatch->BufferPointer->Position = glm::vec4(_pos.x - _size.x, _pos.y - _size.y, 0.f, 1.f);
-		m_QuadBatch->BufferPointer->Color = color;
+		m_QuadBatch->BufferPointer->Color = _color;
 		m_QuadBatch->BufferPointer->TexSlot = texSlot;
 		m_QuadBatch->BufferPointer->TexCoord = m_QuadBatch->DefaultTexCoord[2];
 		++m_QuadBatch->BufferPointer;
 
 		m_QuadBatch->BufferPointer->Position = glm::vec4(_pos.x - _size.x, _pos.y, 0.f, 1.f);
-		m_QuadBatch->BufferPointer->Color = color;
+		m_QuadBatch->BufferPointer->Color = _color;
 		m_QuadBatch->BufferPointer->TexSlot = texSlot;
 		m_QuadBatch->BufferPointer->TexCoord = m_QuadBatch->DefaultTexCoord[3];
 		++m_QuadBatch->BufferPointer;
 
 		m_QuadBatch->Index += 6;
+	}
+
+	void BatchRenderer2D::DrawQuad(glm::vec2 _pos, glm::vec2 _size)
+	{
+		DrawQuad(_pos, _size, m_QuadBatch->DefaultColor);
+	}
+
+	void BatchRenderer2D::DrawQuad(glm::vec2 _pos, glm::vec2 _size, glm::vec4 _color)
+	{
+		DrawQuad(_pos, _size, 0.f, _color, "");
+	}
+
+	void BatchRenderer2D::DrawTexture(glm::vec2 _pos, glm::vec2 _size, const char* _path)
+	{
+		DrawTexture(_pos, _size, _path, m_QuadBatch->DefaultColor);
+	}
+
+	void BatchRenderer2D::DrawTexture(glm::vec2 _pos, glm::vec2 _size, const char* _path, glm::vec4 _color)
+	{
+		DrawQuad(_pos, _size, 0.f, _color, _path);
 	}
 
 	void BatchRenderer2D::DrawLine(LineVertex& _vertex1, LineVertex& _vertex2)

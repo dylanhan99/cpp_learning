@@ -44,8 +44,9 @@ using namespace Graphics;
 
 			BatchRenderer2D::Begin();
 
-			BatchRenderer2D::DrawQuad({ 0.f, 0.f }, { 1.f, 0.5 }, "../../assets/idk.jpg");
-			BatchRenderer2D::DrawQuad({ 0.2f, -0.2f }, { 0.1f, 0.3f });
+			BatchRenderer2D::DrawTexture({ 0.f, 0.f }, { 1.f, 0.5 }, "../../assets/idk.jpg");
+			BatchRenderer2D::DrawTexture({ 1.f, 0.f }, { 1.f, 0.5 }, "../../assets/idk.jpg", {1, 0.3, 0.5, 1});
+			BatchRenderer2D::DrawQuad({ 0.2f, 0.2f }, { 0.1f, 0.3f }, { 0, 0.3, 0.5, 1 });
 			//BatchRenderer2D::DrawQuad({ 0.f, 0.f }, { 1.f, 0.5 });
 
 			//QuadVertex v;
