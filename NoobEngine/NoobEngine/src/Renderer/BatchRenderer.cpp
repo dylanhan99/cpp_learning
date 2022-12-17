@@ -27,6 +27,10 @@ namespace NoobEngine { namespace Graphics {
 		QuadVertex		*BufferBase = nullptr;
 		QuadVertex		*BufferPointer = nullptr;
 		ShaderProgram	*Shaders = nullptr;
+
+		glm::vec4 DefaultColor = { 1.f, 1.f, 1.f, 1.f };
+		float DefaultTexSlot = -1.f;
+		glm::vec2 DefaultTexCoord[4] = { { 0.0f, 1.0f }, { 1.0f, 1.0f }, { 1.0f, 0.0f }, { 0.0f, 0.0f } };
 	};
 
 	struct LineBatch
@@ -117,8 +121,6 @@ namespace NoobEngine { namespace Graphics {
 
 	void BatchRenderer2D::Flush()
 	{
-		auto texture = TextureCache::GetTexture2D("../../assets/idk.jpg");
-		if (texture) m_TextureSlots.push_back(texture);
 		for (int slot = 0; slot < m_TextureSlots.size(); ++slot)
 			m_TextureSlots[slot]->Bind(slot);
 		
@@ -127,14 +129,6 @@ namespace NoobEngine { namespace Graphics {
 		for (int i = 0; i < 32; i++)
 			samplers[i] = i;
 		glUniform1iv(loc, 32, samplers);
-
-		//auto texture = TextureCache::GetTexture2D("../../assets/idk.jpg");
-		//glActiveTexture(GL_TEXTURE0);
-		//if (texture) texture->Bind(0);
-		//auto loc = glGetUniformLocation(m_QuadBatch->Shaders->GetID(), "uTextures");
-		//int samplers[1] = { 0 };
-		//glGetUniformiv(loc, 1, samplers);
-
 
 		if (m_QuadBatch->Index) {
 			m_QuadBatch->Shaders->Bind();
@@ -184,7 +178,7 @@ namespace NoobEngine { namespace Graphics {
 		}
 	}
 
-	void BatchRenderer2D::SubmitQuad(QuadVertex& _vertex)
+	void BatchRenderer2D::DrawQuad(QuadVertex& _vertex)
 	{
 		float size = 1.f;
 		auto position = _vertex.Position;
@@ -223,7 +217,48 @@ namespace NoobEngine { namespace Graphics {
 		m_QuadBatch->Index += 6;
 	}
 
-	void BatchRenderer2D::SubmitLine(LineVertex& _vertex1, LineVertex& _vertex2)
+	void BatchRenderer2D::DrawQuad(glm::vec2 _pos, glm::vec2 _size, const char* _path)
+	{
+		// ../../assets/idk.jpg
+		auto color = m_QuadBatch->DefaultColor;
+		auto texture = TextureCache::GetTexture2D(_path);
+		float texSlot = m_QuadBatch->DefaultTexSlot;
+		if (texture) {
+			m_TextureSlots.push_back(texture);
+			texSlot = m_TextureSlots.size() - 1;
+		}
+
+		if (IndicesOverflow() || TexSlotOverflow())
+			NextBatch();
+
+		m_QuadBatch->BufferPointer->Position = glm::vec4(_pos.x, _pos.y, 0.f, 1.f);
+		m_QuadBatch->BufferPointer->Color = color;
+		m_QuadBatch->BufferPointer->TexSlot = texSlot;
+		m_QuadBatch->BufferPointer->TexCoord = m_QuadBatch->DefaultTexCoord[0];
+		++m_QuadBatch->BufferPointer;
+
+		m_QuadBatch->BufferPointer->Position = glm::vec4(_pos.x, _pos.y - _size.y, 0.f, 1.f);
+		m_QuadBatch->BufferPointer->Color = color;
+		m_QuadBatch->BufferPointer->TexSlot = texSlot;
+		m_QuadBatch->BufferPointer->TexCoord = m_QuadBatch->DefaultTexCoord[1];
+		++m_QuadBatch->BufferPointer;
+
+		m_QuadBatch->BufferPointer->Position = glm::vec4(_pos.x - _size.x, _pos.y - _size.y, 0.f, 1.f);
+		m_QuadBatch->BufferPointer->Color = color;
+		m_QuadBatch->BufferPointer->TexSlot = texSlot;
+		m_QuadBatch->BufferPointer->TexCoord = m_QuadBatch->DefaultTexCoord[2];
+		++m_QuadBatch->BufferPointer;
+
+		m_QuadBatch->BufferPointer->Position = glm::vec4(_pos.x - _size.x, _pos.y, 0.f, 1.f);
+		m_QuadBatch->BufferPointer->Color = color;
+		m_QuadBatch->BufferPointer->TexSlot = texSlot;
+		m_QuadBatch->BufferPointer->TexCoord = m_QuadBatch->DefaultTexCoord[3];
+		++m_QuadBatch->BufferPointer;
+
+		m_QuadBatch->Index += 6;
+	}
+
+	void BatchRenderer2D::DrawLine(LineVertex& _vertex1, LineVertex& _vertex2)
 	{
 		if (m_LineBatch->VertexCount >= RENDERER_LINE_VERTEX_BUFFER_LEN) {
 			Flush();
@@ -239,6 +274,26 @@ namespace NoobEngine { namespace Graphics {
 		++m_LineBatch->BufferPointer;
 		
 		m_LineBatch->VertexCount += 2;
+	}
+
+	bool BatchRenderer2D::IndicesOverflow()
+	{
+		if (m_QuadBatch->Index >= RENDERER_QUAD_INDICES_SIZE)
+			return true;
+		return false;
+	}
+
+	bool BatchRenderer2D::TexSlotOverflow()
+	{
+		if (m_TextureSlots.size() >= 32)
+			return true;
+		return false;
+	}
+
+	void BatchRenderer2D::NextBatch()
+	{
+		Flush();
+		Begin();
 	}
 
 }}

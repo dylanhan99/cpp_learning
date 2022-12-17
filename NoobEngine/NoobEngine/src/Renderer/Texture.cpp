@@ -63,6 +63,10 @@ namespace NoobEngine { namespace Graphics {
 		Texture2D* tex = new Texture2D(_path);
 		if (tex->IsLoaded())
 			m_Textures.insert({ _path, tex });
+		else {
+			delete tex;
+			tex = nullptr;
+		}
 		return tex;
 	}
 
@@ -71,6 +75,8 @@ namespace NoobEngine { namespace Graphics {
 		Texture2D* tex = nullptr;
 		if (m_Textures.find(_path) == m_Textures.end())
 			tex = Add(_path);
+		else
+			tex = m_Textures.at(_path);
 		return tex;
 	}
 

@@ -25,9 +25,15 @@ namespace NoobEngine { namespace Graphics {
 		static void Flush();
 		static void Terminate();
 
-		static void SubmitQuad(QuadVertex& _vertex);
+		static void DrawQuad(QuadVertex& _vertex); // Deprecated
+		static void DrawQuad(glm::vec2 _pos, glm::vec2 _size, const char* _path = "");
+		//static void DrawTexture(float _x, float _y, float _w, float _h, const char* _path);
 
-		static void SubmitLine(LineVertex& _vertex1, LineVertex& _vertex2);
+		static void DrawLine(LineVertex& _vertex1, LineVertex& _vertex2);
+	private:
+		static bool IndicesOverflow();
+		static bool TexSlotOverflow();
+		static void NextBatch();
 	};
 
 }}
