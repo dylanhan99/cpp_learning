@@ -54,6 +54,7 @@ namespace NoobEngine { namespace Graphics {
 
 	void Texture2D::Bind(uint32_t _slot)
 	{
+		glActiveTexture(GL_TEXTURE0 + _slot);
 		glBindTextureUnit(_slot, m_TextureID);
 	}
 

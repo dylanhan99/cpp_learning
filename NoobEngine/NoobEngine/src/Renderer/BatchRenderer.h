@@ -10,11 +10,14 @@
 #pragma once
 #include "Buffer.h"
 #include "Constants.h"
+#include "Texture.h"
 
 namespace NoobEngine { namespace Graphics {
 
 	class BatchRenderer2D
 	{
+	private:
+		static std::vector<Texture2D*> m_TextureSlots;
 	public:
 		static void Init();
 		static void Begin();

@@ -2,7 +2,6 @@
 #include "BatchRenderer.h"
 #include "Shaders/Shader.h"
 
-#include "Texture.h"
 
 namespace NoobEngine { namespace Graphics {
 
@@ -40,6 +39,7 @@ namespace NoobEngine { namespace Graphics {
 		ShaderProgram	*Shaders = nullptr;
 	};
 
+	std::vector<Texture2D*> BatchRenderer2D::m_TextureSlots = {};
 	static struct QuadBatch *m_QuadBatch = nullptr;
 	static struct LineBatch *m_LineBatch = nullptr;
 
@@ -53,6 +53,7 @@ namespace NoobEngine { namespace Graphics {
 		Graphics::BufferLayout layout;
 		layout.Push<glm::vec4>(1);
 		layout.Push<glm::vec4>(1);
+		layout.Push<float>(1);
 		layout.Push<glm::vec2>(1);
 		m_QuadBatch->VAO->AddBuffer(*m_QuadBatch->VBO, layout);
 
@@ -117,14 +118,23 @@ namespace NoobEngine { namespace Graphics {
 	void BatchRenderer2D::Flush()
 	{
 		auto texture = TextureCache::GetTexture2D("../../assets/idk.jpg");
-		int texid = 0;
-		glActiveTexture(GL_TEXTURE0);
-		if (texture) texture->Bind(0);
+		if (texture) m_TextureSlots.push_back(texture);
+		for (int slot = 0; slot < m_TextureSlots.size(); ++slot)
+			m_TextureSlots[slot]->Bind(slot);
+		
 		auto loc = glGetUniformLocation(m_QuadBatch->Shaders->GetID(), "uTextures");
-		int samplers[1] = {0};
-		glGetUniformiv(loc, 1, samplers);
-		//glBindTexture(GL_TEXTURE_2D, m_TextureSlots[i]);
-		//glBindTextureUnit(0, texture.);
+		int samplers[32] = { 0 };
+		for (int i = 0; i < 32; i++)
+			samplers[i] = i;
+		glUniform1iv(loc, 32, samplers);
+
+		//auto texture = TextureCache::GetTexture2D("../../assets/idk.jpg");
+		//glActiveTexture(GL_TEXTURE0);
+		//if (texture) texture->Bind(0);
+		//auto loc = glGetUniformLocation(m_QuadBatch->Shaders->GetID(), "uTextures");
+		//int samplers[1] = { 0 };
+		//glGetUniformiv(loc, 1, samplers);
+
 
 		if (m_QuadBatch->Index) {
 			m_QuadBatch->Shaders->Bind();
@@ -148,10 +158,13 @@ namespace NoobEngine { namespace Graphics {
 			m_LineBatch->VAO->Unbind();
 			m_LineBatch->Shaders->Unbind();
 		}
+
+		m_TextureSlots.clear();
 	}
 
 	void BatchRenderer2D::Terminate()
 	{
+		m_TextureSlots.clear();
 		TextureCache::Terminate();
 		if (m_QuadBatch) {
 			delete m_QuadBatch->VAO;
@@ -176,6 +189,7 @@ namespace NoobEngine { namespace Graphics {
 		float size = 1.f;
 		auto position = _vertex.Position;
 		auto color = _vertex.Color;
+		float texSlot = 1.f;
 
 		if (m_QuadBatch->Index >= RENDERER_QUAD_INDICES_SIZE) {
 			Flush();
@@ -184,21 +198,25 @@ namespace NoobEngine { namespace Graphics {
 
 		m_QuadBatch->BufferPointer->Position = position;
 		m_QuadBatch->BufferPointer->Color = color;
+		m_QuadBatch->BufferPointer->TexSlot = texSlot;
 		m_QuadBatch->BufferPointer->TexCoord = { 0.0f, 1.0f };
 		++m_QuadBatch->BufferPointer;
 
 		m_QuadBatch->BufferPointer->Position = glm::vec4(position.x,		 position.y - size, position.z, 1);
 		m_QuadBatch->BufferPointer->Color = color;
+		m_QuadBatch->BufferPointer->TexSlot = texSlot;
 		m_QuadBatch->BufferPointer->TexCoord = { 1.0f, 1.0f };
 		++m_QuadBatch->BufferPointer;
 
 		m_QuadBatch->BufferPointer->Position = glm::vec4(position.x - size, position.y - size, position.z, 1);
 		m_QuadBatch->BufferPointer->Color = color;
+		m_QuadBatch->BufferPointer->TexSlot = texSlot;
 		m_QuadBatch->BufferPointer->TexCoord = { 1.0f, 0.0f };
 		++m_QuadBatch->BufferPointer;
 
 		m_QuadBatch->BufferPointer->Position = glm::vec4(position.x - size, position.y,		position.z, 1);
 		m_QuadBatch->BufferPointer->Color = color;
+		m_QuadBatch->BufferPointer->TexSlot = texSlot;
 		m_QuadBatch->BufferPointer->TexCoord = { 0.0f, 0.0f };
 		++m_QuadBatch->BufferPointer;
 

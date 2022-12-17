@@ -6,10 +6,10 @@ namespace NoobEngine { namespace Graphics {
 	class Texture2D
 	{
 	private:
-		unsigned int m_TextureID, m_Width, m_Height;
 		const char* m_Path;
 		bool m_IsLoaded;
 	public:
+		unsigned int m_TextureID, m_Width, m_Height;
 		Texture2D(const char* _texturePath);
 		~Texture2D();
 		void Bind(uint32_t _slot);

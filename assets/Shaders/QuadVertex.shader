@@ -2,9 +2,11 @@
 
 layout(location = 0) in vec4 aPosition;
 layout(location = 1) in vec4 aCol;
-layout(location = 2) in vec2 aTexCoord;
+layout(location = 2) in float aTexSlot;
+layout(location = 3) in vec2 aTexCoord;
 
 out vec4 vCol;
+out float vTexSlot;
 out vec2 vTexCoord;
 
 uniform mat4 pr_matrix = mat4(1.0);
@@ -17,5 +19,6 @@ void main()
     //gl_Position = aPosition;
     
     vCol = aCol;
+    vTexSlot = aTexSlot;
     vTexCoord = aTexCoord;
 }
