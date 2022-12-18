@@ -49,19 +49,11 @@ using namespace Graphics;
 			BatchRenderer2D::DrawQuad({ 0.2f, 0.2f }, { 0.1f, 0.3f }, { 0, 0.3, 0.5, 1 });
 			//BatchRenderer2D::DrawQuad({ 0.f, 0.f }, { 1.f, 0.5 });
 
-			//QuadVertex v;
-			//v.Position	= glm::vec4(0.f, 0.f, 0.0f, 1.f);
-			//v.Color		= glm::vec4(1.f, 1.f, 1.f, 1.0f);
-			//BatchRenderer2D::SubmitQuad(v);
-			//
-			//QuadVertex v2;
-			//v2.Position = glm::vec4(1.f, 0.5f, 0.0f, 1.f);
-			//v2.Color	= glm::vec4(1.f, 0.5f, 0.0f, 1.f);
-			//BatchRenderer2D::SubmitQuad(v2);
-			//
 			//LineVertex l = { glm::vec4(-0.5f, -0.5f, 0.0f, 1.f), glm::vec4(0.5f, 0.4f, 0.2f, 1.0f) };
 			//LineVertex l2 = { glm::vec4(0.f, 0.f, 0.0f, 1.f), glm::vec4(0.6f, 0.3f, 1.f, 1.0f) };
 			//BatchRenderer2D::SubmitLine(l, l2);
+			BatchRenderer2D::DrawLine({ -1,-1 }, { 0,0 });
+			BatchRenderer2D::DrawLine({ -1,0 }, { 0,1 }, { 0.6f, 0.3f, 1.f, 1.0f });
 
 			BatchRenderer2D::End();
 			BatchRenderer2D::Flush();

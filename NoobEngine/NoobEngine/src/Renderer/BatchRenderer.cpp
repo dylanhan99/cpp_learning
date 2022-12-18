@@ -227,34 +227,37 @@ namespace NoobEngine { namespace Graphics {
 		DrawQuad(_pos, _size, 0.f, _color, "");
 	}
 
-	void BatchRenderer2D::DrawTexture(glm::vec2 _pos, glm::vec2 _size, const char* _path)
-	{
-		DrawTexture(_pos, _size, _path, m_QuadBatch->DefaultColor);
-	}
-
 	void BatchRenderer2D::DrawTexture(glm::vec2 _pos, glm::vec2 _size, const char* _path, glm::vec4 _color)
 	{
 		DrawQuad(_pos, _size, 0.f, _color, _path);
 	}
 
-	void BatchRenderer2D::DrawLine(LineVertex& _vertex1, LineVertex& _vertex2)
+	void BatchRenderer2D::DrawTexture(glm::vec2 _pos, glm::vec2 _size, const char* _path)
 	{
-		if (m_LineBatch->VertexCount >= RENDERER_LINE_VERTEX_BUFFER_LEN) {
-			Flush();
-			Begin();
-		}
+		DrawTexture(_pos, _size, _path, m_QuadBatch->DefaultColor);
+	}
 
-		m_LineBatch->BufferPointer->Position = _vertex1.Position;
-		m_LineBatch->BufferPointer->Color = _vertex1.Color;
+	void BatchRenderer2D::DrawLine(glm::vec2 _pos1, glm::vec2 _pos2, glm::vec4 _color)
+	{
+		if (LineVertexOverflow())
+			NextBatch();
+
+		m_LineBatch->BufferPointer->Position = glm::vec4(_pos1.x, _pos1.y, 0.f, 1.f);
+		m_LineBatch->BufferPointer->Color = _color;
 		++m_LineBatch->BufferPointer;
 		
-		m_LineBatch->BufferPointer->Position = _vertex2.Position;
-		m_LineBatch->BufferPointer->Color = _vertex2.Color;
+		m_LineBatch->BufferPointer->Position = glm::vec4(_pos2.x, _pos2.y, 0.f, 1.f);
+		m_LineBatch->BufferPointer->Color = _color;
 		++m_LineBatch->BufferPointer;
 		
 		m_LineBatch->VertexCount += 2;
 	}
 
+	void BatchRenderer2D::DrawLine(glm::vec2 _pos1, glm::vec2 _pos2)
+	{
+		DrawLine(_pos1, _pos2, m_QuadBatch->DefaultColor);
+	}
+		
 	bool BatchRenderer2D::IndicesOverflow()
 	{
 		if (m_QuadBatch->Index >= RENDERER_QUAD_INDICES_SIZE)
@@ -265,6 +268,13 @@ namespace NoobEngine { namespace Graphics {
 	bool BatchRenderer2D::TexSlotOverflow()
 	{
 		if (m_TextureSlots.size() >= 32)
+			return true;
+		return false;
+	}
+
+	bool BatchRenderer2D::LineVertexOverflow()
+	{
+		if (m_LineBatch->VertexCount >= RENDERER_LINE_VERTEX_BUFFER_LEN)
 			return true;
 		return false;
 	}
