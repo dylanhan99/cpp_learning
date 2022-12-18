@@ -243,6 +243,10 @@ namespace NoobEngine { namespace Graphics {
 
 	void BatchRenderer2D::DrawLine(glm::vec2 _pos1, glm::vec2 _pos2, glm::vec4 _color)
 	{
+		NormalizePosition(_pos1);
+		NormalizePosition(_pos2);
+		NormalizeColor(_color);
+
 		if (LineVertexOverflow())
 			NextBatch();
 
@@ -291,14 +295,18 @@ namespace NoobEngine { namespace Graphics {
 
 	void BatchRenderer2D::NormalizePosition(glm::vec2& _item)
 	{
-		_item.x /= Window::GetWidth();
-		_item.y /= Window::GetHeight();
+		float amt = (_item.x / Window::GetWidth()) * 2.f;
+		_item.x = -1.f + amt;
+		amt = (_item.y / Window::GetHeight()) * 2.f;
+		_item.y = 1.f - amt;
 	}
 
 	void BatchRenderer2D::NormalizeSize(glm::vec2& _item)
 	{
 		_item.x /= Window::GetWidth();
+		_item.x *= 2.f;
 		_item.y /= Window::GetHeight();
+		_item.y *= 2.f;
 	}
 
 	void BatchRenderer2D::NormalizeColor(glm::vec4& _item)

@@ -88,6 +88,7 @@ namespace NoobEngine { namespace Events {
 
 	double Input::GetCursorX()
 	{
+		LOG_TRACE("%f", m_Cursor.x);
 		return m_Cursor.x;
 	}
 
