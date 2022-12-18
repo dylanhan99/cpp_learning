@@ -1,6 +1,7 @@
 #include "nepch.h"
 #include "BatchRenderer.h"
 #include "Shaders/Shader.h"
+#include "Core/Window.h"
 
 
 namespace NoobEngine { namespace Graphics {
@@ -28,7 +29,7 @@ namespace NoobEngine { namespace Graphics {
 		QuadVertex		*BufferPointer = nullptr;
 		ShaderProgram	*Shaders = nullptr;
 
-		glm::vec4 DefaultColor = { 1.f, 1.f, 1.f, 1.f };
+		glm::vec4 DefaultColor = { 255, 255, 255, 255 };
 		float DefaultTexSlot = -1.f;
 		glm::vec2 DefaultTexCoord[4] = { { 0.0f, 1.0f }, { 1.0f, 1.0f }, { 1.0f, 0.0f }, { 0.0f, 0.0f } };
 	};
@@ -43,7 +44,7 @@ namespace NoobEngine { namespace Graphics {
 		ShaderProgram	*Shaders = nullptr;
 	};
 
-	std::vector<Texture2D*> BatchRenderer2D::m_TextureSlots = {};
+	std::vector<Texture2D*> m_TextureSlots = {};
 	static struct QuadBatch *m_QuadBatch = nullptr;
 	static struct LineBatch *m_LineBatch = nullptr;
 
@@ -182,6 +183,9 @@ namespace NoobEngine { namespace Graphics {
 	{
 		auto texture = TextureCache::GetTexture2D(_path);
 		float texSlot = m_QuadBatch->DefaultTexSlot;
+		NormalizePosition(_pos);
+		NormalizeSize(_size);
+		NormalizeColor(_color);
 		if (texture) {
 			m_TextureSlots.push_back(texture);
 			texSlot = m_TextureSlots.size() - 1;
@@ -284,5 +288,26 @@ namespace NoobEngine { namespace Graphics {
 		Flush();
 		Begin();
 	}
+
+	void BatchRenderer2D::NormalizePosition(glm::vec2& _item)
+	{
+		_item.x /= Window::GetWidth();
+		_item.y /= Window::GetHeight();
+	}
+
+	void BatchRenderer2D::NormalizeSize(glm::vec2& _item)
+	{
+		_item.x /= Window::GetWidth();
+		_item.y /= Window::GetHeight();
+	}
+
+	void BatchRenderer2D::NormalizeColor(glm::vec4& _item)
+	{
+		_item.x /= 255;
+		_item.y /= 255;
+		_item.z /= 255;
+		_item.w /= 255;
+	}
+
 
 }}

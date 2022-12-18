@@ -44,9 +44,9 @@ using namespace Graphics;
 
 			BatchRenderer2D::Begin();
 
-			BatchRenderer2D::DrawTexture({ 0.f, 0.f }, { 1.f, 0.5 }, "../../assets/idk.jpg");
-			BatchRenderer2D::DrawTexture({ 1.f, 0.f }, { 1.f, 0.5 }, "../../assets/idk.jpg", {1, 0.3, 0.5, 1});
-			BatchRenderer2D::DrawQuad({ 0.2f, 0.2f }, { 0.1f, 0.3f }, { 0, 0.3, 0.5, 1 });
+			BatchRenderer2D::DrawTexture({ 100, 0.f }, { 40, 60 }, "../../assets/idk.jpg");
+			BatchRenderer2D::DrawTexture({ -50, -60 }, { 10, 60 }, "../../assets/idk.jpg", {255, 122, 123, 125});
+			BatchRenderer2D::DrawQuad({ 55, 50 }, { 10, 20 }, { 15, 30, 45, 255 });
 			//BatchRenderer2D::DrawQuad({ 0.f, 0.f }, { 1.f, 0.5 });
 
 			//LineVertex l = { glm::vec4(-0.5f, -0.5f, 0.0f, 1.f), glm::vec4(0.5f, 0.4f, 0.2f, 1.0f) };

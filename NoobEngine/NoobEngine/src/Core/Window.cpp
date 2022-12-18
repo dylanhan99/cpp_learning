@@ -7,6 +7,8 @@
 namespace NoobEngine
 {
 	GLFWwindow* Window::m_Window = NULL;
+	float Window::m_Width = 1;
+	float Window::m_Height = 1;
 
 	bool Window::CreateWindow(WindowProps _props)
 	{
@@ -55,6 +57,8 @@ namespace NoobEngine
 	void Window::SetViewPort(uint32_t _width, uint32_t _height)
 	{
 		glViewport(0, 0, _width, _height);
+		m_Width = _width;
+		m_Height = _height;
 	}
 
 	int Window::WindowShouldClose() 

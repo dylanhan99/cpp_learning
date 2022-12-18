@@ -44,6 +44,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Core\Window.cpp" />
     <ClCompile Include="src\Renderer\Texture.cpp" />
+    <ClCompile Include="src\Scripting\Script.cpp" />
     <ClCompile Include="src\Shaders\Shader.cpp" />
     <ClCompile Include="src\Utilities\Utils.cpp" />
   </ItemGroup>
@@ -58,6 +59,7 @@
     <ClInclude Include="src\Log\Log.h" />
     <ClInclude Include="src\Core\Window.h" />
     <ClInclude Include="src\Renderer\Texture.h" />
+    <ClInclude Include="src\Scripting\Script.h" />
     <ClInclude Include="src\Shaders\Shader.h" />
     <ClInclude Include="src\Utilities\Utils.h" />
   </ItemGroup>

@@ -17,7 +17,6 @@ namespace NoobEngine { namespace Graphics {
 	class BatchRenderer2D
 	{
 	private:
-		static std::vector<Texture2D*> m_TextureSlots;
 	public:
 		static void Init();
 		static void Begin();
@@ -25,6 +24,7 @@ namespace NoobEngine { namespace Graphics {
 		static void Flush();
 		static void Terminate();
 
+		static void DrawQuad(glm::vec2 _pos, glm::vec2 _size, float _rotation, glm::vec4 _color, const char* _path);
 		static void DrawQuad(glm::vec2 _pos, glm::vec2 _size, glm::vec4 _color);
 		static void DrawQuad(glm::vec2 _pos, glm::vec2 _size);
 		static void DrawTexture(glm::vec2 _pos, glm::vec2 _size, const char* _path, glm::vec4 _color);
@@ -34,13 +34,16 @@ namespace NoobEngine { namespace Graphics {
 		static void DrawLine(glm::vec2 _pos1, glm::vec2 _pos2);
 		//static void DrawLine(glm::vec2 _pos1, glm::vec2 _pos2, float _width);
 	private:
-		static void DrawQuad(glm::vec2 _pos, glm::vec2 _size, float _rotation, glm::vec4 _color, const char* _path);
 		//static void DrawLine
 
 		static bool IndicesOverflow();
 		static bool TexSlotOverflow();
 		static bool LineVertexOverflow();
 		static void NextBatch();
+
+		static void NormalizePosition(glm::vec2& _item);
+		static void NormalizeSize(glm::vec2& _item);
+		static void NormalizeColor(glm::vec4& _item);
 	};
 
 }}

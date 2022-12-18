@@ -22,6 +22,8 @@ namespace NoobEngine
 		//static const char* title;
 		//static uint32_t width, height;
 		static GLFWwindow* m_Window;
+		static float m_Width;
+		static float m_Height;
 
 	public:
 		static bool CreateWindow(WindowProps _props);
@@ -32,6 +34,9 @@ namespace NoobEngine
 
 		static void Clear();
 		static void SwapBuffers();
+
+		static inline const float GetWidth() { return m_Width; }
+		static inline const float GetHeight() { return m_Height; }
 
 		static void framebuffer_size_callback(GLFWwindow* _window, int _width, int _height);
 	};
