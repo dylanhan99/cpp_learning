@@ -31,7 +31,7 @@ namespace NoobEngine { namespace Graphics {
 
 		glm::vec4 DefaultColor = { 255, 255, 255, 255 };
 		float DefaultTexSlot = -1.f;
-		glm::vec2 DefaultTexCoord[4] = { { 0.0f, 1.0f }, { 1.0f, 1.0f }, { 1.0f, 0.0f }, { 0.0f, 0.0f } };
+		glm::vec2 DefaultTexCoord[4] = { { 0.0f, 0.0f }, { 0.0f, 1.0f }, { 1.0f, 1.0f }, { 1.0f, 0.0f } };
 	};
 
 	struct LineBatch
