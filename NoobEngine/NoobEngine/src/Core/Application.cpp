@@ -44,7 +44,7 @@ using namespace Events;
 			//glUniform4f(glGetUniformLocation(shaderProgram, "ml_matrix"), vector.x, vector.y, vector.z, vector.w);
 
 			BatchRenderer2D::Begin();
-			BatchRenderer2D::DrawTexture({ Window::GetWidth(), 0 }, { Window::GetWidth(), 100 }, "../../assets/idk.jpg");
+			BatchRenderer2D::DrawTexture({ 0, 0 }, { Window::GetWidth(), 100 }, "../../assets/idk.jpg");
 			BatchRenderer2D::DrawTexture({ 200, 200 }, { 150, 100 }, "../../assets/idk.jpg", {255, 122, 123, 125});
 			BatchRenderer2D::DrawQuad({ Input::GetCursorX(), Input::GetCursorY() }, { 20, 20 }, { 15, 30, 45, 255 });
 			BatchRenderer2D::DrawQuad({ 450, 700 }, { 320, 50 });

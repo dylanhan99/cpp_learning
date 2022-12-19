@@ -206,13 +206,13 @@ namespace NoobEngine { namespace Graphics {
 		m_QuadBatch->BufferPointer->TexCoord = m_QuadBatch->DefaultTexCoord[1];
 		++m_QuadBatch->BufferPointer;
 
-		m_QuadBatch->BufferPointer->Position = glm::vec4(_pos.x - _size.x, _pos.y - _size.y, 0.f, 1.f);
+		m_QuadBatch->BufferPointer->Position = glm::vec4(_pos.x + _size.x, _pos.y - _size.y, 0.f, 1.f);
 		m_QuadBatch->BufferPointer->Color = _color;
 		m_QuadBatch->BufferPointer->TexSlot = texSlot;
 		m_QuadBatch->BufferPointer->TexCoord = m_QuadBatch->DefaultTexCoord[2];
 		++m_QuadBatch->BufferPointer;
 
-		m_QuadBatch->BufferPointer->Position = glm::vec4(_pos.x - _size.x, _pos.y, 0.f, 1.f);
+		m_QuadBatch->BufferPointer->Position = glm::vec4(_pos.x + _size.x, _pos.y, 0.f, 1.f);
 		m_QuadBatch->BufferPointer->Color = _color;
 		m_QuadBatch->BufferPointer->TexSlot = texSlot;
 		m_QuadBatch->BufferPointer->TexCoord = m_QuadBatch->DefaultTexCoord[3];
